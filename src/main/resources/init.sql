@@ -11,7 +11,7 @@ CREATE TABLE users(
     id serial primary key,
     name text unique not null,
     email text unique not null,
-    password varchar(8) not null,
+    password varchar(10) not null,
     role text not null,
     location text not null,
     address text not null,
@@ -109,7 +109,7 @@ create trigger update_profit
 after update on orders for each row
 execute procedure update_profit();
 
-INSERT INTO users (name, email, password, role, location, addresst) VALUES
+INSERT INTO users (name, email, password, role, location, address) VALUES
 	('user1', 'user1@user1.com', 'password1', 'user', 'Miskolc','address1'), --1
     ('user2', 'user2@user2.com', 'password2', 'courier', 'Miskolc','address2'), --2
     ('user3', 'user3@user3.com', 'password3', 'admin', 'Miskolc','address3'); --3
@@ -121,10 +121,10 @@ INSERT INTO restaurants (name, location) VALUES
     ('Golden Dragon', 'Miskolc'); --4
 
 INSERT INTO products (name, price, availability,picture,description,category) VALUES
-	('CheeseBurger', 300, true, 'https://killerburger.com/wp-content/uploads/2016/03/Meathead-Website-300x300.jpg', 'Tasty burger','Burger'), --1
-    ('Hawaii Pizza', 1000, true, 'https://paragonpizza.ca/wp-content/uploads/2018/11/Tropical-Hawaiian-Meat-Pizza-300x300-1.png', 'Tasty Hawaii Pizza','Pizza'), --2
-    ('9 treasure beef', 700, true, 'https://www.billyparisi.com/wp-content/uploads/stir-fry-page.jpg', 'Ching-chang chong','Chinise food'), --3
-    ('Italiano Pasta', 800, true, 'http://www.mindmegette.hu/images/219/O/milani-spagetti.jpg', 'Tasty Spagetti','Pasta'); --4
+	('CheeseBurger', 300, true, 'https://killerburger.com/wp-content/uploads/2016/03/Meathead-Website-300x300.jpg', 'Tasty burger','appetizer'), --1
+    ('Hawaii Pizza', 1000, true, 'https://paragonpizza.ca/wp-content/uploads/2018/11/Tropical-Hawaiian-Meat-Pizza-300x300-1.png', 'Tasty Hawaii Pizza','entree'), --2
+    ('9 treasure beef', 700, true, 'https://www.billyparisi.com/wp-content/uploads/stir-fry-page.jpg', '等中区别','entree'), --3
+    ('Italiano Pasta', 800, true, 'http://www.mindmegette.hu/images/219/O/milani-spagetti.jpg', 'Tasty Spagetti','entree'); --4
 
 INSERT INTO ratings (restaurant_id, user_id, rating) VALUES
 	(1, 1, 3), --1

@@ -1,4 +1,4 @@
-# CodeMates
+# CodeMatesSpring
   - A project which is based on the idea of the American PostMates. It is stirctly for learning and practicing purposes.
   
   Project's backlog: 

@@ -7,6 +7,7 @@ target
 .vscode
 dist
 pom.xml
+application.properties
 
 # compiled output
 /dist

@@ -12,7 +12,7 @@ CREATE TABLE users(
     name text unique not null,
     email text unique not null,
     password varchar(10) not null,
-    role text not null,
+    roles text[] not null,
     location text not null,
     address text not null,
     cut numeric default 0,
@@ -100,7 +100,7 @@ execute procedure update_rating();
 create or replace function update_profit()
 returns trigger as '
 begin
-update users set profit = (select sum(orders.price * 100 / users.cut) from orders left join users on orders.user_id = users.id WHERE orders.complete = true);
+update users set profit = (select sum(carts.price * 100 / users.cut) from carts left join users on orders.user_id = users.id WHERE orders.complete = true);
 return new;
 end;
 ' language plpgsql;
@@ -109,10 +109,10 @@ create trigger update_profit
 after update on orders for each row
 execute procedure update_profit();
 
-INSERT INTO users (name, email, password, role, location, address) VALUES
-	('user1', 'user1@user1.com', 'password1', 'user', 'Miskolc','address1'), --1
-    ('user2', 'user2@user2.com', 'password2', 'courier', 'Miskolc','address2'), --2
-    ('user3', 'user3@user3.com', 'password3', 'admin', 'Miskolc','address3'); --3
+INSERT INTO users (name, email, password, roles, location, address) VALUES
+	('user1', 'user1@user1.com', 'password1', '{"ROLE_USER"}', 'Miskolc','address1'), --1
+    ('user2', 'user2@user2.com', 'password2', '{"ROLE_USER"}', 'Miskolc','address2'), --2
+    ('user3', 'user3@user3.com', 'password3', '{"ROLE_USER"}', 'Miskolc','address3'); --3
 
 INSERT INTO restaurants (name, location) VALUES
 	('TastyBurger', 'Miskolc'), --1

@@ -75,7 +75,7 @@ CREATE TABLE orders(
 
 create or replace function total_cart_price()
 returns trigger as '
-begin 
+begin
 update carts set price = (select sum(cart_items.price) from cart_items left join carts on cart_items.cart_id = carts.id);
 return new;
 end;
@@ -87,7 +87,7 @@ execute procedure total_cart_price();
 
 create or replace function update_rating()
 returns trigger as '
-begin 
+begin
 update restaurants set rating = (select avg(ratings.rating) from ratings join restaurants on ratings.restaurant_id = restaurants.id);
 return new;
 end;
@@ -99,7 +99,7 @@ execute procedure update_rating();
 
 create or replace function update_profit()
 returns trigger as '
-begin 
+begin
 update users set profit = (select sum(orders.price * 100 / users.cut) from orders left join users on orders.user_id = users.id WHERE orders.complete = true);
 return new;
 end;
@@ -109,3 +109,43 @@ create trigger update_profit
 after update on orders for each row
 execute procedure update_profit();
 
+INSERT INTO users (name, email, password, role, location, addresst) VALUES
+	('user1', 'user1@user1.com', 'password1', 'user', 'Miskolc','address1'), --1
+    ('user2', 'user2@user2.com', 'password2', 'courier', 'Miskolc','address2'), --2
+    ('user3', 'user3@user3.com', 'password3', 'admin', 'Miskolc','address3'); --3
+
+INSERT INTO restaurants (name, location) VALUES
+	('TastyBurger', 'Miskolc'), --1
+    ('MammaItaliano', 'Budapest'), --2
+    ('Pizzeria', 'Miskolc'), --3
+    ('Golden Dragon', 'Miskolc'); --4
+
+INSERT INTO products (name, price, availability,picture,description,category) VALUES
+	('CheeseBurger', 300, true, 'https://killerburger.com/wp-content/uploads/2016/03/Meathead-Website-300x300.jpg', 'Tasty burger','Burger'), --1
+    ('Hawaii Pizza', 1000, true, 'https://paragonpizza.ca/wp-content/uploads/2018/11/Tropical-Hawaiian-Meat-Pizza-300x300-1.png', 'Tasty Hawaii Pizza','Pizza'), --2
+    ('9 treasure beef', 700, true, 'https://www.billyparisi.com/wp-content/uploads/stir-fry-page.jpg', 'Ching-chang chong','Chinise food'), --3
+    ('Italiano Pasta', 800, true, 'http://www.mindmegette.hu/images/219/O/milani-spagetti.jpg', 'Tasty Spagetti','Pasta'); --4
+
+INSERT INTO ratings (restaurant_id, user_id, rating) VALUES
+	(1, 1, 3), --1
+    (1, 2, 2), --2
+    (2, 3,5); --3
+
+INSERT INTO menus (restaurant_id, product_id) VALUES
+	(1, 1), --1
+    (2, 2), --2
+    (2, 4), --3
+    (3, 2), --4
+    (4, 3); --5
+
+INSERT INTO carts (user_id) VALUES
+	(1), --1
+    (2); --2
+INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
+	(1, 1, 2, 600), --1
+    (1, 2, 1, 1000), --2
+    (2, 3, 3, 2100); --3
+
+INSERT INTO orders (user_id, courier_id, cart_id) VALUES
+	(1, 2, 1), --1
+    (2, 2, 2); --3

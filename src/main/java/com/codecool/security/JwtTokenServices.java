@@ -33,9 +33,7 @@ public class JwtTokenServices {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    // Creates a JWT token
     public String createToken(String username, List<String> roles) {
-        // Add a custom field to the token
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(rolesFieldName, roles);
 
@@ -58,7 +56,6 @@ public class JwtTokenServices {
         return null;
     }
 
-    // checks if the token is valid and not expired.
     boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);

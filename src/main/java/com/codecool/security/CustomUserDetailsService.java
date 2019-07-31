@@ -2,30 +2,38 @@ package com.codecool.security;
 
 import com.codecool.model.Users;
 import com.codecool.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository users;
+    @Autowired
+    UserRepository userRepo;
 
-    public CustomUserDetailsService(UserRepository users) {
-        this.users = users;
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    //Loads the user from the DB and converts it to Spring Security's internal User object
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Users user = users.findByName(name)
+        BCryptPasswordEncoder encoder = passwordEncoder();
+        System.out.println(userRepo.findByName(name));
+        Users user = userRepo.findByName(name)
             .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
 
-        return new User(user.getName(), user.getPassword(),  user.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        return new org.springframework.security.core.userdetails.User(user.getName(),encoder.encode(user.getPassword()), Arrays.asList(user.getRoles()).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
 }

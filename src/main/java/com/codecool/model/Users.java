@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table
@@ -26,13 +25,11 @@ public class Users {
 
     private String password;
 
-    private String role;
-
     private String location;
 
     private String address;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    @Type(type = "com.codecool.util.JPAArrayHandler")
+    public String[] roles;
+
 }

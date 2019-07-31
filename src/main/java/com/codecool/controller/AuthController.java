@@ -3,6 +3,8 @@ package com.codecool.controller;
 import com.codecool.model.UserCredentials;
 import com.codecool.repository.UserRepository;
 import com.codecool.security.JwtTokenServices;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,32 +24,35 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenServices jwtTokenServices;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices, UserRepository users) {
+    @Autowired
+    UserRepository userRepository;
+
+    public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenServices = jwtTokenServices;
     }
 
     @PostMapping("/login")
-    public ResponseEntity signin(@RequestBody UserCredentials data) {
+    public ResponseEntity login(@RequestBody UserCredentials data) {
         try {
-            String username = data.getUsername();
-            // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+            String name = data.getName();
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, data.getPassword()));
             List<String> roles = authentication.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            String token = jwtTokenServices.createToken(username, roles);
+            String token = jwtTokenServices.createToken(name, roles);
 
             Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
+            model.put("name", name);
             model.put("roles", roles);
             model.put("token", token);
             return ResponseEntity.ok(model);

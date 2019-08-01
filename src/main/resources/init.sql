@@ -67,7 +67,7 @@ CREATE TABLE cart_items(
 CREATE TABLE orders(
     id serial primary key,
     user_id int references users(id),
-    courier_id int references users(id),
+    courier_id int references users(id) check (courier_id != user_id),
     cart_id int references carts(id),
     picked_up boolean default false,
     complete boolean default false
@@ -76,7 +76,7 @@ CREATE TABLE orders(
 create or replace function total_cart_price()
 returns trigger as '
 begin
-update carts set price = (select sum(cart_items.price) from cart_items left join carts on cart_items.cart_id = carts.id);
+update carts set price = (select sum(cart_items.price) from cart_items where cart_items.cart_id = carts.id);
 return new;
 end;
 ' language plpgsql;
@@ -88,7 +88,7 @@ execute procedure total_cart_price();
 create or replace function update_rating()
 returns trigger as '
 begin
-update restaurants set rating = (select avg(ratings.rating) from ratings join restaurants on ratings.restaurant_id = restaurants.id);
+update restaurants set rating = (select avg(ratings.rating) from ratings where restaurants.id = ratings.restaurant_id);
 return new;
 end;
 ' language plpgsql;
@@ -100,7 +100,9 @@ execute procedure update_rating();
 create or replace function update_profit()
 returns trigger as '
 begin
-update users set profit = (select sum(carts.price * 100 / users.cut) from carts left join users on orders.user_id = users.id WHERE orders.complete = true);
+update users set profit = (select sum(carts.price / 100 * users.cut) from carts
+                           join orders on orders.courier_id = users.id and orders.cart_id = carts.id and orders.complete is true
+						   where users.id = orders.courier_id);
 return new;
 end;
 ' language plpgsql;
@@ -129,7 +131,7 @@ INSERT INTO products (name, price, availability,picture,description,category) VA
 INSERT INTO ratings (restaurant_id, user_id, rating) VALUES
 	(1, 1, 3), --1
     (1, 2, 2), --2
-    (2, 3,5); --3
+    (2, 3, 5); --3
 
 INSERT INTO menus (restaurant_id, product_id) VALUES
 	(1, 1), --1
@@ -148,4 +150,4 @@ INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
 
 INSERT INTO orders (user_id, courier_id, cart_id) VALUES
 	(1, 2, 1), --1
-    (2, 2, 2); --3
+    (1, 2, 2); --3

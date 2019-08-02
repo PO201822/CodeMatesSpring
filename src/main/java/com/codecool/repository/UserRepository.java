@@ -11,4 +11,6 @@ public interface UserRepository extends CrudRepository<Users, Integer> {
 
     Optional<Users> findByName(String name);
 
+    @Override
+    <S extends Users> S save(S entity);
 }

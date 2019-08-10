@@ -1,11 +1,13 @@
 package com.codecool.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -13,6 +15,10 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedQueries({
+        @NamedQuery(name = "findsomething",
+                query="select distinct r from Restaurants r inner join r.products p where p.name = :prodname"),
+})
 public class Restaurants {
 
     @Id
@@ -26,5 +32,9 @@ public class Restaurants {
     private Integer rating;
 
     private Integer max_cut;
+
+    @ManyToMany(mappedBy = "restaurants")
+    @JsonBackReference
+    List<Products> products;
 }
 

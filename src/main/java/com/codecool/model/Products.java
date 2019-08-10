@@ -1,11 +1,13 @@
 package com.codecool.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -30,4 +32,11 @@ public class Products {
     private String description;
 
     private String category;
+
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(name="menus",
+            joinColumns=@JoinColumn(name="restaurant_id"),
+            inverseJoinColumns=@JoinColumn(name="product_id"))
+    private List<Restaurants> restaurants;
 }

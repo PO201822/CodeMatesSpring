@@ -32,4 +32,11 @@ public class Users {
     @Type(type = "com.codecool.util.JPAArrayHandler")
     public String[] roles;
 
+    public Users(String name, String email, String password, String location, String address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.location = location;
+        this.address = address;
+    }
 }

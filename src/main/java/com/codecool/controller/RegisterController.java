@@ -16,6 +16,13 @@ public class RegisterController {
     @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
     @PostMapping("/register")
     public Users register(@RequestBody Users data) {
-        return userRepository.save(data);
+        String name = data.getName();
+        String password = data.getPassword();
+        String email = data.getEmail();
+        String location = data.getLocation();
+        String address = data.getAddress();
+        String[] roles = new String[]{"USER"};
+        Users newUser = new Users(name, email, password, location, address);
+        return userRepository.save(newUser);
     }
 }

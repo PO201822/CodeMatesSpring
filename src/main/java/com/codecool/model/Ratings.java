@@ -28,13 +28,13 @@ public class Ratings implements Serializable {
 
     @ManyToOne(targetEntity = Restaurants.class)
     @MapsId("restaurant_id")
-    @JoinColumn(name = "restaurantId", updatable = false, insertable = false,
+    @JoinColumn(name = "restaurant_id", updatable = false, insertable = false,
             referencedColumnName = "id")
     private List<Restaurants> restaurants = new ArrayList<>();
 
     @ManyToOne(targetEntity = Users.class)
     @MapsId("user_id")
-    @JoinColumn(name = "userId", updatable = false, insertable = false,
+    @JoinColumn(name = "user_id", updatable = false, insertable = false,
             referencedColumnName = "id")
     private List<Users> users = new ArrayList<>();
 

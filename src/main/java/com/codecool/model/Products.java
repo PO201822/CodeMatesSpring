@@ -1,6 +1,5 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +34,6 @@ public class Products {
     private String category;
 
     @ManyToMany
-    @JsonManagedReference
     @JoinTable(name="menus",
             joinColumns=@JoinColumn(name="restaurant_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))

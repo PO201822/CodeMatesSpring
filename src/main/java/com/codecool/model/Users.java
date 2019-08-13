@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table
@@ -38,6 +36,7 @@ public class Users {
     @Type(type = "com.codecool.util.JPAArrayHandler")
     public String[] roles;
 
+    /*
     @OneToMany(mappedBy = "users")
     private List<Ratings> ratings = new ArrayList<>();
 
@@ -48,7 +47,8 @@ public class Users {
     private List<Orders> orders = new ArrayList<>();
 
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
-    private List<Orders> couries = new ArrayList<>();
+    private List<Orders> couriers = new ArrayList<>();
+    */
 
     public Users(String name, String email, String password, String location, String address) {
         this.name = name;

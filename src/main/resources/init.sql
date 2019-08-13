@@ -41,7 +41,8 @@ CREATE TABLE products(
 CREATE TABLE ratings(
     restaurant_id int references restaurants(id),
     user_id int references users(id) unique,
-    rating numeric check (rating > 0)
+    rating numeric check (rating > 0),
+    primary key (restaurant_id, user_id)
 );
 
 CREATE TABLE menus(

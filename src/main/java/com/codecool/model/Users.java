@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,6 +16,10 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+/*@NamedQueries({
+        @NamedQuery(name = "findRatedRestaurants",
+                query="select distinct r from Restaurants r inner join r.ratings rate where rate.userId = :iduser"),
+       })*/
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,5 +37,18 @@ public class Users {
 
     @Type(type = "com.codecool.util.JPAArrayHandler")
     public String[] roles;
+
+    @OneToMany(mappedBy = "users")
+    private List<Ratings> ratings = new ArrayList<>();
+
+    @OneToMany(targetEntity = Carts.class, mappedBy = "user")
+    private List<Carts> carts = new ArrayList<>();
+
+    @OneToMany(targetEntity = Orders.class, mappedBy = "user")
+    private List<Orders> orders = new ArrayList<>();
+
+    @OneToMany(targetEntity = Orders.class, mappedBy = "user")
+    private List<Orders> couries = new ArrayList<>();
+
 
 }

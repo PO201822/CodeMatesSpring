@@ -1,16 +1,18 @@
 package com.codecool.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "restaurants")
 @Data
 @Builder
 @NoArgsConstructor
@@ -35,6 +37,10 @@ public class Restaurants {
 
     @ManyToMany(mappedBy = "restaurants")
     @JsonBackReference
-    List<Products> products;
+    private List<Products> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users")
+    @JsonIgnore
+    private List<Ratings> ratings = new ArrayList<>();
 }
 

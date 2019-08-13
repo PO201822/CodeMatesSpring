@@ -1,10 +1,13 @@
 package com.codecool.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class RatingId implements Serializable {
 

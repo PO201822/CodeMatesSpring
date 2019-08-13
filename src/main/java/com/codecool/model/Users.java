@@ -1,9 +1,7 @@
 package com.codecool.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -12,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedQueries({
@@ -39,6 +37,7 @@ public class Users {
     public String[] roles;
 
     @OneToMany(mappedBy = "users")
+    @JsonManagedReference
     private List<Ratings> ratings = new ArrayList<>();
 
     @OneToMany(targetEntity = Carts.class, mappedBy = "user")

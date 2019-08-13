@@ -1,11 +1,7 @@
 package com.codecool.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,10 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @NamedQueries({
         @NamedQuery(name = "findsomething",
                 query="select distinct r from Restaurants r inner join r.products p where p.name = :prodname"),
@@ -40,7 +36,7 @@ public class Restaurants {
     private List<Products> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "users")
-    @JsonIgnore
+    @JsonBackReference
     private List<Ratings> ratings = new ArrayList<>();
 }
 

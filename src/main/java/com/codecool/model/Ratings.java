@@ -1,18 +1,15 @@
 package com.codecool.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RatingId.class)
@@ -28,15 +25,17 @@ public class Ratings implements Serializable {
 
     @ManyToOne(targetEntity = Restaurants.class)
     @MapsId("restaurant_id")
+    @JsonBackReference
     @JoinColumn(name = "restaurant_id", updatable = false, insertable = false,
             referencedColumnName = "id")
-    private List<Restaurants> restaurants = new ArrayList<>();
+    private Restaurants restaurants;
 
     @ManyToOne(targetEntity = Users.class)
     @MapsId("user_id")
+    @JsonBackReference
     @JoinColumn(name = "user_id", updatable = false, insertable = false,
             referencedColumnName = "id")
-    private List<Users> users = new ArrayList<>();
+    private Users users;
 
     private Integer rating;
 }

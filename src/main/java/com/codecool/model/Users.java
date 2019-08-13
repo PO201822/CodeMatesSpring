@@ -50,5 +50,11 @@ public class Users {
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
     private List<Orders> couries = new ArrayList<>();
 
-
+    public Users(String name, String email, String password, String location, String address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.location = location;
+        this.address = address;
+    }
 }

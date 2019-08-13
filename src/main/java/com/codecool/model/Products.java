@@ -1,7 +1,8 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ public class Products {
     private String category;
 
     @ManyToMany
-    @JsonManagedReference
     @JoinTable(name="menus",
             joinColumns=@JoinColumn(name="restaurant_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface RestaurantsRepostitory extends JpaRepository<Restaurants, Integer> {
 
-    List<Restaurants> findByLocationIs(String location);
+    List<Restaurants> findByLocationIgnoreCase(String location);
 }

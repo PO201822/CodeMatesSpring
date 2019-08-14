@@ -56,7 +56,7 @@ public class JwtTokenServices {
         return null;
     }
 
-    boolean validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             if (claims.getBody().getExpiration().before(new Date())) {
@@ -75,7 +75,7 @@ public class JwtTokenServices {
      * This could result in returning false data (e.g. the user was deleted, but their token has not expired yet)
      * To prevent errors because of this make sure to check the user in the database for more important calls!
      */
-    Authentication parseUserFromTokenInfo(String token) throws UsernameNotFoundException {
+    public Authentication parseUserFromTokenInfo(String token) throws UsernameNotFoundException {
         Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String username = body.getSubject();
         List<String> roles = (List<String>) body.get(rolesFieldName);

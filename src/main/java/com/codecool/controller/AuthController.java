@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class AuthController {
 
@@ -37,7 +36,6 @@ public class AuthController {
         this.jwtTokenServices = jwtTokenServices;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
     @PostMapping("/signin")
     public ResponseEntity login(@RequestBody UserCredentials data) {
         try {

@@ -1,22 +1,38 @@
 package com.codecool.controller;
 
-import com.codecool.model.Users;
+import com.codecool.model.JWTToken;
 import com.codecool.repository.UserRepository;
+import com.codecool.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.Optional;
+
+@RestController
 public class MainController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(path="/all")
-    public @ResponseBody
-    Iterable<Users> getAllUsers() {
-        return userRepository.findAll();
+    private JwtTokenServices jwtTokenServices;
+
+    MainController(JwtTokenServices jwtTokenServices) {
+        this.jwtTokenServices = jwtTokenServices;
+    }
+
+    @PostMapping(path="/profile")
+    public Optional getProfile(@RequestBody JWTToken data) {
+        String token = data.getToken();
+        token = token.replaceAll("\"", "");
+        if (jwtTokenServices.validateToken(token)) {
+            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
+            String name = auth.getName();
+            return userRepository.findByName(name);
+        }
+        return null;
     }
 }
 

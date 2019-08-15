@@ -1,8 +1,10 @@
 package com.codecool.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "findAllByRestaurantId",
-                query="select p from Products p" +
+                query = "select p from Products p" +
                         " inner join p.restaurants r where r.id = :restaurantid"),
 })
 public class Products {
@@ -47,12 +49,13 @@ public class Products {
     private String category;
 
     @ManyToMany
-    @JoinTable(name="menus",
-            joinColumns=@JoinColumn(name="restaurant_id"),
-            inverseJoinColumns=@JoinColumn(name="product_id"))
+    @JoinTable(name = "menus",
+            joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Restaurants> restaurants = new ArrayList<>();
 
     @ManyToMany(targetEntity = CartItems.class)
     @JoinColumn
+    @JsonIgnore
     private List<CartItems> cartItems = new ArrayList<>();
 }

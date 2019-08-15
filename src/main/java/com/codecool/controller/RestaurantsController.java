@@ -1,6 +1,5 @@
 package com.codecool.controller;
 
-import com.codecool.dto.ProductDto;
 import com.codecool.model.Products;
 import com.codecool.model.Restaurants;
 import com.codecool.repository.RestaurantsRepostitory;

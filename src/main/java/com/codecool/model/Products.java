@@ -14,7 +14,21 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedQueries({
+        @NamedQuery(name = "findAllByRestaurantId",
+                query="select p from Products p" +
+                        " inner join p.restaurants r where r.id = :restaurantid"),
+})
 public class Products {
+
+    public Products(String name, Integer price, boolean availability, String picture, String description, String category) {
+        this.name = name;
+        this.price = price;
+        this.availability = availability;
+        this.picture = picture;
+        this.description = description;
+        this.category = category;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

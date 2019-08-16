@@ -47,7 +47,8 @@ CREATE TABLE ratings(
 
 CREATE TABLE menus(
     restaurant_id int references restaurants(id),
-    product_id int references products(id)
+    product_id int references products(id),
+    primary key (product_id, restaurant_id)
 );
 
 CREATE TABLE carts(

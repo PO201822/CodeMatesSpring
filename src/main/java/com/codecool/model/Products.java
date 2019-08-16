@@ -50,8 +50,8 @@ public class Products {
 
     @ManyToMany
     @JoinTable(name = "menus",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id"))
     private List<Restaurants> restaurants = new ArrayList<>();
 
     @ManyToMany(targetEntity = CartItems.class)

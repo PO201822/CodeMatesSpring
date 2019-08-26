@@ -1,5 +1,6 @@
 package com.codecool.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,12 +21,14 @@ public class Carts {
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn
+    @JsonBackReference
     private Users user;
 
     private Integer price;
 
     private boolean checkedOut;
 
-    @OneToMany(targetEntity = Orders.class,  mappedBy = "cart")
-    private List<Orders> orders = new ArrayList<>();
+    @OneToOne(targetEntity = Orders.class,  mappedBy = "cart")
+    @JsonBackReference
+    private Orders orders;
 }

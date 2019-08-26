@@ -1,5 +1,7 @@
 package com.codecool.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +11,6 @@ import java.util.List;
 @Entity
 @Table
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedQueries({
@@ -24,17 +25,21 @@ public class Orders {
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn
-    private List<Users> courier = new ArrayList<>();
+    @JsonBackReference
+    private Users courier;
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn
-    private List<Users> user = new ArrayList<>();
+    @JsonBackReference
+    private Users user;
 
     private boolean pickedUp;
 
     private boolean complete;
 
-    @ManyToOne(targetEntity = Carts.class)
+    @OneToOne(targetEntity = Carts.class)
     @JoinColumn
-    private List<Carts> cart = new ArrayList<>();
+    @JsonManagedReference
+    private Carts cart;
+
 }

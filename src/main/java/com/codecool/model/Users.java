@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -32,22 +34,29 @@ public class Users {
     private String address;
 
     @Type(type = "com.codecool.util.JPAArrayHandler")
-    public String[] roles;
+    private String[] roles;
 
-    /*
+    private int cut;
+
+    private boolean premium;
+
+    private int profit;
+
     @OneToMany(mappedBy = "users")
     @JsonManagedReference
     private List<Ratings> ratings = new ArrayList<>();
 
     @OneToMany(targetEntity = Carts.class, mappedBy = "user")
+    @JsonManagedReference
     private List<Carts> carts = new ArrayList<>();
 
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
+    @JsonManagedReference
     private List<Orders> orders = new ArrayList<>();
 
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
     private List<Orders> couriers = new ArrayList<>();
-    */
+
 
     public Users(String name, String email, String password, String location, String address) {
         this.name = name;
@@ -55,5 +64,17 @@ public class Users {
         this.password = password;
         this.location = location;
         this.address = address;
+    }
+
+    public Users(String name, String email, String password, String location, String address, String[] roles, int cut, boolean premium, int profit) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.location = location;
+        this.address = address;
+        this.roles = roles;
+        this.cut = cut;
+        this.premium = premium;
+        this.profit = profit;
     }
 }

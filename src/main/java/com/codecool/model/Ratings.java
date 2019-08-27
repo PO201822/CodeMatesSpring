@@ -1,6 +1,6 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,14 +25,14 @@ public class Ratings implements Serializable {
 
     @ManyToOne(targetEntity = Restaurants.class)
     @MapsId("restaurant_id")
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "restaurant_id", updatable = false, insertable = false,
             referencedColumnName = "id")
     private Restaurants restaurants;
 
     @ManyToOne(targetEntity = Users.class)
     @MapsId("user_id")
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "user_id", updatable = false, insertable = false,
             referencedColumnName = "id")
     private Users users;

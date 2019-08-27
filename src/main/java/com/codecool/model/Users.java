@@ -1,6 +1,6 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -43,17 +43,18 @@ public class Users {
     private int profit;
 
     @OneToMany(mappedBy = "users")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Ratings> ratings = new ArrayList<>();
 
     @OneToMany(targetEntity = Carts.class, mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Carts> carts = new ArrayList<>();
 
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Orders> orders = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(targetEntity = Orders.class, mappedBy = "user")
     private List<Orders> couriers = new ArrayList<>();
 
@@ -66,15 +67,5 @@ public class Users {
         this.address = address;
     }
 
-    public Users(String name, String email, String password, String location, String address, String[] roles, int cut, boolean premium, int profit) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.location = location;
-        this.address = address;
-        this.roles = roles;
-        this.cut = cut;
-        this.premium = premium;
-        this.profit = profit;
-    }
+
 }

@@ -1,6 +1,6 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -25,12 +25,12 @@ public class Orders {
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn
-    @JsonBackReference
+    @JsonIgnore
     private Users courier;
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn
-    @JsonBackReference
+    @JsonIgnore
     private Users user;
 
     private boolean pickedUp;
@@ -39,7 +39,7 @@ public class Orders {
 
     @OneToOne(targetEntity = Carts.class)
     @JoinColumn
-    @JsonManagedReference
+    @JsonIgnore
     private Carts cart;
 
 }

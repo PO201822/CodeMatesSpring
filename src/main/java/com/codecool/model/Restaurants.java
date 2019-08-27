@@ -1,6 +1,6 @@
 package com.codecool.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,11 +32,11 @@ public class Restaurants {
     private Integer max_cut;
 
     @ManyToMany(mappedBy = "restaurants")
-    @JsonBackReference
+    @JsonIgnore
     private List<Products> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "users")
-    @JsonBackReference
+    @JsonIgnore
     private List<Ratings> ratings = new ArrayList<>();
 }
 

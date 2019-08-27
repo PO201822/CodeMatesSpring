@@ -96,7 +96,7 @@ end;
 ' language plpgsql;
 
 create trigger default_role
-after insert on users for each row
+after insert or update on users for each row
 execute procedure default_role();
 
 create or replace function update_rating()

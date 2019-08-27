@@ -13,6 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "carts")
+@NamedQueries({
+        @NamedQuery(name = "findAvailableCartsByUserId",
+                query="select c from Carts c where c.user = :user"),
+})
 public class Carts {
 
     @Id
@@ -31,4 +35,13 @@ public class Carts {
     @OneToOne(targetEntity = Orders.class,  mappedBy = "cart")
     @JsonIgnore
     private Orders orders;
+
+    @OneToMany(targetEntity = CartItems.class, mappedBy = "cart")
+    private List<CartItems> cartItems = new ArrayList<>();
+
+    public Carts(Users user, Integer price, boolean checkedOut) {
+        this.user = user;
+        this.price = price;
+        this.checkedOut = checkedOut;
+    }
 }

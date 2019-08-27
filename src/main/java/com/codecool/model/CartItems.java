@@ -17,9 +17,9 @@ public class CartItems {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToMany(targetEntity = Carts.class)
+    @ManyToOne(targetEntity = Carts.class)
     @JoinColumn
-    private List<Carts> cart = new ArrayList<>();
+    private Carts cart;
 
     @OneToMany(targetEntity = Products.class)
     @JoinColumn

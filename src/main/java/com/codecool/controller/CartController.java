@@ -1,10 +1,8 @@
 package com.codecool.controller;
-import com.codecool.model.Carts;
-import com.codecool.model.JWTToken;
-import com.codecool.model.OrderDto;
-import com.codecool.model.Users;
+import com.codecool.model.*;
 import com.codecool.repository.CartItemsRepository;
 import com.codecool.repository.CartRepository;
+import com.codecool.repository.ProductsRepository;
 import com.codecool.repository.UserRepository;
 import com.codecool.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,27 +35,38 @@ public class CartController {
     @Autowired
     private CartItemsRepository cartItemsRepository;
 
+    @Autowired
+    private ProductsRepository productsRepository;
+
     @PersistenceContext
     private EntityManager em;
 
     @PostMapping(path="/addToCart")
     public void addToCart(@RequestBody OrderDto orderDto) {
 
-        String tokenA = orderDto.getToken();
-        tokenA = tokenA.replaceAll("\"", "");
-        if (jwtTokenServices.validateToken(tokenA)) {
-            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(tokenA);
+        String token = orderDto.getToken();
+        token = token.replaceAll("\"", "");
+        int productId = orderDto.getProductId();
+        int quantity = orderDto.getQuantity();
+        Products products = productsRepository.findById(productId);
+
+        if (jwtTokenServices.validateToken(token)) {
+            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
             String name = auth.getName();
             Users user = userRepository.findByName(name)
                     .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
 
-            List<Carts> resultList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class).setParameter("user", user).getResultList();
+            List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
+                    .setParameter("user", user).getResultList();
 
-            if(resultList.size() == 0){
+            if(cartsList.size() == 0){
                 Carts newCart = cartRepository.save(new Carts(user, 0, false));
 
+                CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, quantity*products.getPrice()));
+
             } else {
-                //addtocart
+                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity*products.getPrice()));
+
             }
 
         }

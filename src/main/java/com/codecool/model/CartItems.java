@@ -14,16 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 public class CartItems {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(targetEntity = Carts.class)
     @JoinColumn
     private Carts cart;
 
-    @OneToMany(targetEntity = Products.class)
+    @ManyToOne(targetEntity = Products.class)
     @JoinColumn
-    private List<Products> product = new ArrayList<>();
+    private Products product;
 
     private Integer quantity;
 
@@ -33,4 +33,10 @@ public class CartItems {
     private List<Orders> orders = new ArrayList<>();
 
 
+    public CartItems(Carts cart, Products product, Integer quantity, Integer price) {
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

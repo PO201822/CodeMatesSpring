@@ -54,7 +54,7 @@ public class Products {
             inverseJoinColumns = @JoinColumn(name = "restaurant_id"))
     private List<Restaurants> restaurants = new ArrayList<>();
 
-    @ManyToMany(targetEntity = CartItems.class)
+    @OneToMany(targetEntity = CartItems.class)
     @JoinColumn
     @JsonIgnore
     private List<CartItems> cartItems = new ArrayList<>();

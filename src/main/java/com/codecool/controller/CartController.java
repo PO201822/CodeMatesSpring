@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -40,7 +41,6 @@ public class CartController {
 
     @PostMapping(path = "/addToCart")
     public void addToCart(@RequestBody OrderDto orderDto) {
-
         String token = orderDto.getToken();
         token = token.replaceAll("\"", "");
         int productId = orderDto.getProductId();
@@ -85,14 +85,34 @@ public class CartController {
                         .setParameter("cart_id", cartsList.get(0).getId()).getResultList();
 
                 List<CartDto> cartDtos = new ArrayList<>();
-                for (CartItems cartItems : allFromCart){
+                for (CartItems cartItems : allFromCart) {
                     Products product = cartItems.getProduct();
-                    cartDtos.add(new CartDto(product, cartItems.getQuantity()));
+                    cartDtos.add(new CartDto(product, cartItems.getQuantity(), cartsList.get(0)));
                 }
                 return cartDtos;
             }
         }
         return null;
+    }
+
+    @PutMapping(path = "/checkout")
+    public @ResponseBody
+    void checkoutCart(@RequestBody JWTToken data) {
+        String token = data.getToken();
+        token = token.replaceAll("\"", "");
+        if (jwtTokenServices.validateToken(token)) {
+            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
+            String name = auth.getName();
+            Users user = userRepository.findByName(name)
+                    .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
+
+            List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
+                    .setParameter("user", user).getResultList();
+
+            cartsList.get(0).setCheckedOut(true);
+            cartRepository.save(cartsList.get(0));
+
+        }
     }
 
 }

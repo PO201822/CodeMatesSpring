@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,7 +66,7 @@ public class CartController {
     }
 
     @GetMapping(path = "/myCart")
-    public List<CartItems> getMyCart(@RequestParam String token) {
+    public List<CartDto> getMyCart(@RequestParam String token) {
         token = token.replaceAll("\"", "");
         if (jwtTokenServices.validateToken(token)) {
             Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
@@ -82,7 +83,13 @@ public class CartController {
             } else {
                 List<CartItems> allFromCart = em.createNamedQuery("findCartItemsByCartId", CartItems.class)
                         .setParameter("cart_id", cartsList.get(0).getId()).getResultList();
-                return allFromCart;
+
+                List<CartDto> cartDtos = new ArrayList<>();
+                for (CartItems cartItems : allFromCart){
+                    Products product = cartItems.getProduct();
+                    cartDtos.add(new CartDto(product, cartItems.getQuantity()));
+                }
+                return cartDtos;
             }
         }
         return null;

@@ -1,4 +1,5 @@
 package com.codecool.controller;
+
 import com.codecool.model.*;
 import com.codecool.repository.CartItemsRepository;
 import com.codecool.repository.CartRepository;
@@ -8,16 +9,11 @@ import com.codecool.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -41,7 +37,7 @@ public class CartController {
     @PersistenceContext
     private EntityManager em;
 
-    @PostMapping(path="/addToCart")
+    @PostMapping(path = "/addToCart")
     public void addToCart(@RequestBody OrderDto orderDto) {
 
         String token = orderDto.getToken();
@@ -59,17 +55,37 @@ public class CartController {
             List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                     .setParameter("user", user).getResultList();
 
-            if(cartsList.size() == 0){
+            if (cartsList.size() == 0) {
                 Carts newCart = cartRepository.save(new Carts(user, 0, false));
-
-                CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, quantity*products.getPrice()));
-
+                CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, quantity * products.getPrice()));
             } else {
-                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity*products.getPrice()));
-
+                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity * products.getPrice()));
             }
-
         }
-
     }
+
+    @GetMapping(path = "/myCart")
+    public List<CartItems> getMyCart(@RequestParam String token) {
+        token = token.replaceAll("\"", "");
+        if (jwtTokenServices.validateToken(token)) {
+            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
+            String name = auth.getName();
+            Users user = userRepository.findByName(name)
+                    .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
+
+            List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
+                    .setParameter("user", user).getResultList();
+
+            if (cartsList.size() == 0) {
+                //the cart is empty
+                return null;
+            } else {
+                List<CartItems> allFromCart = em.createNamedQuery("findCartItemsByCartId", CartItems.class)
+                        .setParameter("cart_id", cartsList.get(0).getId()).getResultList();
+                return allFromCart;
+            }
+        }
+        return null;
+    }
+
 }

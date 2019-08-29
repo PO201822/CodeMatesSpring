@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "carts")
 @NamedQueries({
         @NamedQuery(name = "findAvailableCartsByUserId",
-                query="select c from Carts c where c.user = :user"),
+                query="select c from Carts c where c.user = :user and c.checkedOut = false"),
 })
 public class Carts {
 

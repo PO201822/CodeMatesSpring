@@ -1,5 +1,6 @@
 package com.codecool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedQueries({
+        @NamedQuery(name = "findCartItemsByCartId",
+                query="select distinct ci from CartItems ci inner join ci.cart c where c.id = :cart_id"),
+})
 public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +24,7 @@ public class CartItems {
 
     @ManyToOne(targetEntity = Carts.class)
     @JoinColumn
+    @JsonIgnore
     private Carts cart;
 
     @ManyToOne(targetEntity = Products.class)

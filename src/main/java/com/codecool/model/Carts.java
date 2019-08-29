@@ -37,6 +37,7 @@ public class Carts {
     private Orders orders;
 
     @OneToMany(targetEntity = CartItems.class, mappedBy = "cart")
+    @JsonIgnore
     private List<CartItems> cartItems = new ArrayList<>();
 
     public Carts(Users user, Integer price, boolean checkedOut) {

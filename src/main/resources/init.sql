@@ -25,7 +25,8 @@ CREATE TABLE restaurants(
     name text unique not null,
     location text not null,
     rating numeric default 0,
-    max_cut numeric default 100
+    max_cut numeric default 100,
+    picture text not null
 );
 
 CREATE TABLE products(
@@ -130,13 +131,13 @@ INSERT INTO users (name, email, password, location, address) VALUES
     ('user2', 'user2@user2.com', 'password2', 'Miskolc','address2'), --2
     ('user3', 'user3@user3.com', 'password3', 'Miskolc','address3'); --3
 
-INSERT INTO restaurants (name, location) VALUES
-	('Tasty Burger', 'Miskolc'), --1
-    ('Mamma Italiano', 'Budapest'), --2
-    ('Pizzeria', 'Miskolc'), --3
-    ('Golden Dragon', 'Miskolc'), --4
-    ('Pizza De La Arte', 'Budapest'), --5
-    ('Big Dinner', 'Budapest'); --6
+INSERT INTO restaurants (name, location, picture) VALUES
+	('Tasty Burger', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --1
+    ('Mamma Italiano', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --2
+    ('Pizzeria', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --3
+    ('Golden Dragon', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --4
+    ('Pizza De La Arte', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --5
+    ('Big Dinner', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'); --6
 
 INSERT INTO products (name, price, availability,picture,description,category) VALUES
 	('Classic Burger', 300, true, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDNJO0zqj4-bqeqk9joALA7LrlCXv29z7TGM_P7WTMgQBFemvrrg', 'Tasty burger','appetizer'), --1

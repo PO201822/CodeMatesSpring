@@ -31,6 +31,8 @@ public class Restaurants {
 
     private Integer max_cut;
 
+    private String picture;
+
     @ManyToMany(mappedBy = "restaurants")
     @JsonIgnore
     private List<Products> products = new ArrayList<>();

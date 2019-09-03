@@ -23,12 +23,14 @@ public class RegisterController {
         String location = data.getLocation();
         String address = data.getAddress();
 
-        if(userRepository.findByEmail(email).equals(Optional.empty()) ){
+        if(userRepository.findByName(name).equals(Optional.empty()) &&
+            userRepository.findByEmail(email) == null
+        ){
             Users newUser = new Users(name, email, password, location, address);
             return userRepository.save(newUser);
         }
         else {
-            throw new BadCredentialsException("Email already exists!");
+            throw new BadCredentialsException("Email and/or username already exists!");
         }
     }
 }

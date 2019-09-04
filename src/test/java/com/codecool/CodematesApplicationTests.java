@@ -1,16 +1,13 @@
 package com.codecool;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class CodematesApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void test1() {
+		assertEquals(true, true);
 	}
-
 }

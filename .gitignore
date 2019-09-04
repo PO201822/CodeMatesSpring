@@ -1,18 +1,20 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
 #Extended
 .idea
 target
-*.iml
 *.swp
 .factorypath
 .vscode
 dist
-pom.xml
 application.properties
 
 # compiled output
 /dist
 /tmp
 /out-tsc
+
 # Only exists if Bazel was run
 /bazel-out
 
@@ -31,6 +33,8 @@ speed-measure-plugin.json
 *.launch
 .settings/
 *.sublime-workspace
+*.iws
+*.ipr
 
 # IDE - VSCode
 .vscode/*
@@ -53,3 +57,17 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# STS
+.apt_generated
+.settings
+.springBeans
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/

@@ -9,7 +9,7 @@
 			<outputDirectory>./</outputDirectory>
 			<fileMode>755</fileMode>
 			<includes>
-				<include>wait-for-it.sh</include>
+				<include>delay.sh</include>
 				<include>start.sh</include>
 			</includes>
 		</fileSet>
@@ -17,7 +17,7 @@
 			<directory>${project.basedir}/target</directory>
 			<outputDirectory>./</outputDirectory>
 			<includes>
-				<include>app.jar</include>
+				<include>codemates-0.0.1-SNAPSHOT.jar</include>
 			</includes>
 		</fileSet>
 	</fileSets>

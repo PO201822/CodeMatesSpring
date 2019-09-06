@@ -33,6 +33,8 @@ public class Restaurants {
 
     private String picture;
 
+    private String description;
+
     @ManyToMany(mappedBy = "restaurants")
     @JsonIgnore
     private List<Products> products = new ArrayList<>();

@@ -26,7 +26,8 @@ CREATE TABLE restaurants(
     location text not null,
     rating numeric default 0,
     max_cut numeric default 100,
-    picture text not null
+    picture text not null,
+    description text not null
 );
 
 CREATE TABLE products(
@@ -131,28 +132,28 @@ INSERT INTO users (name, email, password, location, address) VALUES
     ('user2', 'user2@user2.com', 'password2', 'Miskolc','address2'), --2
     ('user3', 'user3@user3.com', 'password3', 'Miskolc','address3'); --3
 
-INSERT INTO restaurants (name, location, picture) VALUES
-	('Tasty Burger', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --1
-    ('Mamma Italiano', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --2
-    ('Pizzeria', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --3
-    ('Golden Dragon', 'Miskolc', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --4
-    ('Pizza De La Arte', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'), --5
-    ('Big Dinner', 'Budapest', 'https://s3.amazonaws.com/thumbnails.venngage.com/template/01dcc6e2-4575-405b-b5bd-bd984c2317a7.png'); --6
+INSERT INTO restaurants (name, location, picture, description) VALUES
+	('Tasty Burger', 'Miskolc', 'assets/restaurant-logos/burger.png','Burgers. Yes, burgers. We serve the best burgers in this planet!'), --1
+    ('Mamma Italiano', 'Budapest', 'assets/restaurant-logos/pasta.png','Un agradecimiento a las madres, que trabajando fuera de casa o no, han comprendido y realizan esa labor de ser madre de familia. Actually, who reads this!'), --2
+    ('Pablo''s Pizzeria', 'Miskolc', 'assets/restaurant-logos/pizza.png','We serve original, tasty, and hand crafted pizzas!'), --3
+    ('Golden Dragon', 'Miskolc', 'assets/restaurant-logos/ramen.png','弗勒杰迪伊艾 迪艾诶弗勒艾 艾伊娜哦诶屁艾诶艾哦!'), --4
+    ('Pizza De La Arte', 'Budapest', 'assets/restaurant-logos/pizza.png','Pizza is love, pizza is life!'), --5
+    ('Big Dinner', 'Budapest', 'assets/restaurant-logos/steak.png','Big dinner, big prices!'); --6
 
 INSERT INTO products (name, price, availability,picture,description,category) VALUES
-	('Classic Burger', 300, true, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDNJO0zqj4-bqeqk9joALA7LrlCXv29z7TGM_P7WTMgQBFemvrrg', 'Tasty burger','appetizer'), --1
-    ('Classic Pizza', 1000, true, 'https://static.netpincer.hu/cms/article/article-3a4ff8b4-c954-58fd-135e-873a6f5a8c0a/pizza_1.jpg','Tasty Classic Pizza', 'entree'), --2
-    ('Pork Noodle', 700, true, 'https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/oh/12/oh-chinese-pork-tenderloin-noodles-x.jpg?itok=5PbGxhAZ', '等中区别','entree'), --3
-    ('Italiano Pasta', 800, true, 'http://www.mindmegette.hu/images/219/O/milani-spagetti.jpg', 'Tasty Spagetti','entree'), --4
-    ('Pizza Fruit de Mer', 1100, true, 'http://rd-prod.s3.amazonaws.com/images/nouvelles_recettes/Pizza-aux-fruits-de-mer.jpg?1434377034', 'Tasty Pizza Fruit de Mer', 'entree'), --5
-    ('Pizza Salame Picante', 1000, true, 'https://st2.depositphotos.com/1692343/5636/i/950/depositphotos_56360353-stock-photo-hot-homemade-pepperoni-pizza.jpg', 'Tasty Picante', 'entree'), --6
-    ('Extra Bacon Burger', 1000, true, 'https://fullerssugarhouse.com/wp/wp-content/uploads/maple-bacon-burger-t.jpg', 'Tasty Burger with Bacon', 'entree'), --7
-    ('Double Meat Burger', 1400, true, 'https://external-preview.redd.it/7T8abYnPaTVzPB1WnevmR5F8nBmjh0NEpAwjpzNVCak.jpg?width=768&auto=webp&s=84ea9747b7b4c0e075dcbf49966d2e41f2667e34', 'Tasty Big Burger', 'entree'), --8
-    ('Huge Burger', 2500, true, 'https://media-cdn.tripadvisor.com/media/photo-s/07/9f/df/ec/biggest-burger-mmmm.jpg', 'Tasty Huge Burger', 'entree'), --9
-    ('Tiramisu', 900, true, 'http://www.mindmegette.hu/images/170/O/crop_201611031209_tiramisu.jpg', 'Tasty Tiramisu', 'dessert'), --10
-    ('Lasagne', 1000, true, 'http://www.mindmegette.hu/images/23/O/31468_lasagne_n-201510170727.jpg', 'Tasty Lasagne', 'entree'), --11
-    ('Ramen Soup', 700, true, 'https://s23209.pcdn.co/wp-content/uploads/2014/10/Easy-Homemade-RamenIMG_9333edit-360x360.jpg', 'Tasty Ramen Soup', 'appetizer'), --12
-    ('Chicken Wings', 750, true, 'https://www.rockrecipes.com/wp-content/uploads/2016/02/General-Tso-Chicken-Wings-close-up-photo-of-wings-on-white-plate.jpg', 'General Tso Chicken Wings', 'entree'); --13
+	('Classic Burger', 600, true, 'assets/menu-icons/burger-classic.jpeg', 'Tasty classic burger','appetizer'), --1
+    ('Classic Pizza', 1000, true, 'assets/menu-icons/pizza-classic.jpg','Tasty classic pizza', 'entree'), --2
+    ('Pork Noodle', 700, true, 'assets/menu-icons/pork-noodle.jpg', '等中区别','entree'), --3
+    ('Italiano Pasta', 800, true, 'assets/menu-icons/italiano-pasta.jpg' , 'Tasty spagetti','entree'), --4
+    ('Pizza Fruits de Mer', 1100, true, 'assets/menu-icons/pizza-fruits-de-mer.jpg' , 'Tasty Pizza Fruits de Mer', 'entree'), --5
+    ('Pizza Picante', 1000, true, 'assets/menu-icons/pizza-picante.jpg', 'Tasty Picante', 'entree'), --6
+    ('Extra Bacon Burger', 1000, true, 'assets/menu-icons/burger-bacon.jpg', 'Tasty Burger with Bacon', 'entree'), --7
+    ('Double Meat Burger', 1400, true, 'assets/menu-icons/burger-double.jpg', 'Tasty Big Burger', 'entree'), --8
+    ('Huge Burger', 2500, true, 'assets/menu-icons/burger-huge.jpg', 'Tasty Huge Burger', 'entree'), --9
+    ('Tiramisu', 900, true, 'assets/menu-icons/tiramisu.jpg', 'Tasty Tiramisu', 'dessert'), --10
+    ('Lasagne', 1000, true, 'assets/menu-icons/lasagne.jpg', 'Tasty Lasagne', 'entree'), --11
+    ('Ramen Soup', 700, true, 'assets/menu-icons/ramen-soup.jpg', 'Tasty Ramen Soup', 'appetizer'), --12
+    ('Chicken Wings', 750, true, 'assets/menu-icons/chicken-wings.jpg', 'General Tso Chicken Wings', 'entree'); --13
 
 
 INSERT INTO ratings (restaurant_id, user_id, rating) VALUES

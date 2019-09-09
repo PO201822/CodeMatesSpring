@@ -115,4 +115,20 @@ public class CartController {
         }
     }
 
+    @DeleteMapping(path = "/deleteItem")
+    public @ResponseBody
+    void deleteFromCart(@RequestParam int productId, String token){
+        token = token.replaceAll("\"", "");
+        if (jwtTokenServices.validateToken(token)) {
+            Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
+            String name = auth.getName();
+            Users user = userRepository.findByName(name)
+                    .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
+
+            Products byId = productsRepository.findById(productId);
+            cartItemsRepository.deleteByProductAndCart_User(byId, user);
+        }
+
+    }
+
 }

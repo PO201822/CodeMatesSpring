@@ -32,16 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll()
-                .antMatchers("/profile").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/restaurant/*").permitAll()
-                .antMatchers("/restaurants").permitAll()
-                .antMatchers("/addToCart").permitAll()
-                .antMatchers("/myCart").permitAll()
-                .antMatchers("/checkout").permitAll()
+                .antMatchers("/*").authenticated()
                 .anyRequest().denyAll()
             .and()
             .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);
+        http.cors();
     }
 }
 

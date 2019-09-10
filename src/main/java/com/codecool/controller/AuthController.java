@@ -14,11 +14,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 @Slf4j
@@ -34,6 +33,12 @@ public class AuthController {
     public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenServices = jwtTokenServices;
+    }
+
+
+    @GetMapping("/me")
+    public Map<String, String > getMe() {
+        return Collections.emptyMap();
     }
 
     @PostMapping("/signin")

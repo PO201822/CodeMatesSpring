@@ -53,7 +53,7 @@ public class CartController {
 
         if (cartsList.size() == 0) {
             Carts newCart = cartRepository.save(new Carts(user, 0, false));
-            CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, quantity * products.getPrice()));
+            CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, products.getPrice()));
         } else {
             boolean isInCart = false;
 
@@ -67,7 +67,7 @@ public class CartController {
                 }
             }
             if (!isInCart) {
-                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity * products.getPrice()));
+                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, products.getPrice()));
             }
         }
 

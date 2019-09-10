@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class CartController {
 
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
+
 
         if (cartsList.size() == 0) {
             Carts newCart = cartRepository.save(new Carts(user, 0, false));
@@ -94,10 +96,11 @@ public class CartController {
     @Transactional
     public @ResponseBody
     void deleteFromCart(@RequestParam int productId) {
-        Users user = userRepository.findByName(userService.currentUser());
         Products byId = productsRepository.findById(productId);
-        cartItemsRepository.deleteByProductAndCart_User(byId, user);
+        Users user = userRepository.findByName(userService.currentUser());
+        List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
+                .setParameter("user", user).getResultList();
+
+        em.createNamedQuery("deleteProductFromCart").setParameter("product", byId).setParameter("cart", cartsList.get(0)).executeUpdate();
     }
-
-
 }

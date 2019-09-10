@@ -36,11 +36,6 @@ public class AuthController {
     }
 
 
-    @GetMapping("/me")
-    public Map<String, String > getMe() {
-        return Collections.emptyMap();
-    }
-
     @PostMapping("/signin")
     public ResponseEntity login(@RequestBody UserCredentials data) {
         try {

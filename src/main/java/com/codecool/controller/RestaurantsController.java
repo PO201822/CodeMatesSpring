@@ -1,8 +1,8 @@
 package com.codecool.controller;
 
-import com.codecool.model.Products;
-import com.codecool.model.Restaurants;
-import com.codecool.model.RestaurantsDto;
+import com.codecool.entity.Products;
+import com.codecool.entity.Restaurants;
+import com.codecool.dto.RestaurantsDto;
 import com.codecool.repository.RestaurantsRepostitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.codecool.controller;
 
-import com.codecool.model.Users;
+import com.codecool.entity.Users;
 import com.codecool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;

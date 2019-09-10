@@ -1,6 +1,11 @@
 package com.codecool.controller;
 
-import com.codecool.model.*;
+import com.codecool.dto.CartItemDto;
+import com.codecool.dto.OrderDto;
+import com.codecool.entity.CartItems;
+import com.codecool.entity.Carts;
+import com.codecool.entity.Products;
+import com.codecool.entity.Users;
 import com.codecool.repository.CartItemsRepository;
 import com.codecool.repository.CartRepository;
 import com.codecool.repository.ProductsRepository;

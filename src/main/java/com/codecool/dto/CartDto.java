@@ -1,5 +1,7 @@
-package com.codecool.model;
+package com.codecool.dto;
 
+import com.codecool.entity.Carts;
+import com.codecool.entity.Products;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

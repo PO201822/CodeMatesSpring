@@ -1,6 +1,6 @@
 package com.codecool.repository;
 
-import com.codecool.model.Restaurants;
+import com.codecool.entity.Restaurants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.codecool.model;
+package com.codecool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

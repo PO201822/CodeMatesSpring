@@ -1,10 +1,8 @@
 package com.codecool.repository;
 
-import com.codecool.model.Users;
+import com.codecool.entity.Users;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<Users, Integer> {

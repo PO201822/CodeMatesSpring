@@ -1,6 +1,6 @@
 package com.codecool.repository;
 
-import com.codecool.model.Carts;
+import com.codecool.entity.Carts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

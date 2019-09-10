@@ -1,4 +1,4 @@
-package com.codecool.model;
+package com.codecool.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

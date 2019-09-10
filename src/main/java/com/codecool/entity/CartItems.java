@@ -1,11 +1,9 @@
-package com.codecool.model;
+package com.codecool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "cart_items")

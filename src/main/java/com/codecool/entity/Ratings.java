@@ -1,5 +1,6 @@
-package com.codecool.model;
+package com.codecool.entity;
 
+import com.codecool.model.RatingId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 

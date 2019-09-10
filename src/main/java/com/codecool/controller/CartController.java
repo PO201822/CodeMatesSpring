@@ -49,12 +49,24 @@ public class CartController {
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
-
         if (cartsList.size() == 0) {
             Carts newCart = cartRepository.save(new Carts(user, 0, false));
             CartItems save = cartItemsRepository.save(new CartItems(newCart, products, quantity, quantity * products.getPrice()));
         } else {
-            CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity * products.getPrice()));
+            boolean isInCart = false;
+
+            List<CartItems> cartItems = cartsList.get(0).getCartItems();
+
+            for (CartItems c : cartItems) {
+                if (c.getProduct().equals(products)) {
+                    c.setQuantity(quantity += c.getQuantity());
+                    cartItemsRepository.save(c);
+                    isInCart = true;
+                }
+            }
+            if (!isInCart) {
+                CartItems save = cartItemsRepository.save(new CartItems(cartsList.get(0), products, quantity, quantity * products.getPrice()));
+            }
         }
 
     }
@@ -65,7 +77,7 @@ public class CartController {
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
-        if (cartsList.size() == 0) {
+        if (cartsList.get(0).getCartItems().size() == 0) {
             //the cart is empty
             return null;
         } else {

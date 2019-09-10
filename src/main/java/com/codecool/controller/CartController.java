@@ -94,6 +94,15 @@ public class CartController {
         cartRepository.save(cartsList.get(0));
     }
 
+    @PutMapping(path = "/updateCartItemQuantity")
+    public @ResponseBody
+    void updateCartItems(@RequestBody CartItemDto cartItemDto) {
+        Users user = userRepository.findByName(userService.currentUser());
+        CartItems cartItems = cartItemsRepository.findById(cartItemDto.getCartItemId());
+        cartItems.setQuantity(cartItemDto.getQuantity());
+        cartItemsRepository.save(cartItems);
+    }
+
     @DeleteMapping(path = "/deleteItem")
     @Transactional
     public @ResponseBody

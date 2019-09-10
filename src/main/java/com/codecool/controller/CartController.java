@@ -5,7 +5,6 @@ import com.codecool.repository.CartItemsRepository;
 import com.codecool.repository.CartRepository;
 import com.codecool.repository.ProductsRepository;
 import com.codecool.repository.UserRepository;
-import com.codecool.security.JwtTokenServices;
 import com.codecool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -72,7 +69,7 @@ public class CartController {
     }
 
     @GetMapping(path = "/myCart")
-    public List<CartDto> getMyCart() {
+    public List<CartItems> getMyCart() {
         Users user = userRepository.findByName(userService.currentUser());
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
@@ -81,15 +78,8 @@ public class CartController {
             //the cart is empty
             return null;
         } else {
-            List<CartItems> allFromCart = em.createNamedQuery("findCartItemsByCartId", CartItems.class)
+            return em.createNamedQuery("findCartItemsByCartId", CartItems.class)
                     .setParameter("cart_id", cartsList.get(0).getId()).getResultList();
-
-            List<CartDto> cartDtos = new ArrayList<>();
-            for (CartItems cartItems : allFromCart) {
-                Products product = cartItems.getProduct();
-                cartDtos.add(new CartDto(product, cartItems.getQuantity(), cartsList.get(0)));
-            }
-            return cartDtos;
         }
     }
 

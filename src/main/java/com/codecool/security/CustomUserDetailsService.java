@@ -31,8 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         BCryptPasswordEncoder encoder = passwordEncoder();
         System.out.println(userRepo.findByName(name));
-        Users user = userRepo.findByName(name)
-            .orElseThrow(() -> new UsernameNotFoundException("Username: " + name + " not found"));
+        Users user = userRepo.findByName(name);
 
         return new org.springframework.security.core.userdetails.User(user.getName(),encoder.encode(user.getPassword()), Arrays.asList(user.getRoles()).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }

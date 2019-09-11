@@ -12,7 +12,7 @@ CREATE TABLE users(
     name text unique not null,
     email text unique not null,
     password varchar(10) not null,
-    roles text[] default ARRAY['USER'],
+    roles text[] default ARRAY['ROLE_USER'],
     location text not null,
     address text not null,
     cut numeric default 0,
@@ -92,7 +92,7 @@ execute procedure total_cart_price();
 create or replace function default_role()
 returns trigger as '
 begin
-update users set roles = ARRAY[''USER''] where roles is null;
+update users set roles = ARRAY[''ROLE_USER''] where roles is null;
 return new;
 end;
 ' language plpgsql;
@@ -128,9 +128,12 @@ after update on orders for each row
 execute procedure update_profit();
 
 INSERT INTO users (name, email, password, location, address) VALUES
-	('user1', 'user1@user1.com', 'password1', 'Miskolc','address1'), --1
+	 --1
     ('user2', 'user2@user2.com', 'password2', 'Miskolc','address2'), --2
     ('user3', 'user3@user3.com', 'password3', 'Miskolc','address3'); --3
+INSERT INTO users(name, email, password, roles, location, address) values
+('user1', 'user1@user1.com', 'password1', ARRAY['ROLE_ADMIN'] , 'Miskolc','address1');
+
 
 INSERT INTO restaurants (name, location, picture, description) VALUES
 	('Tasty Burger', 'Miskolc', 'assets/restaurant-logos/burger.png','Burgers. Yes, burgers. We serve the best burgers in this planet!'), --1

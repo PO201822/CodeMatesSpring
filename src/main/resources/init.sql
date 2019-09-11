@@ -57,7 +57,8 @@ CREATE TABLE carts(
 	id serial primary key,
 	user_id int references users(id),
 	price numeric default 0,
-	checked_out boolean default false
+	checked_out boolean default false,
+	checkout_date timestamp default null
 );
 
 CREATE TABLE cart_items(

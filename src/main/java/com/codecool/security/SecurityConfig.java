@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/signin").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/getrole").permitAll()
+                .antMatchers("/courier/*").hasRole("COURIER")
                 .antMatchers("/*").authenticated()
                 .antMatchers("/restaurant/*").authenticated()
                 .anyRequest().denyAll()

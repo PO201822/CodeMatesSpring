@@ -76,6 +76,10 @@ public class CartController {
     @GetMapping(path = "/myCart")
     public List<CartItems> getMyCart() {
         Users user = userRepository.findByName(userService.currentUser());
+        if(cartRepository.findByUserId(user.getId()) == null){
+            return null;
+        }
+
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 

@@ -23,7 +23,7 @@ public class RegisterController {
         String location = data.getLocation();
         String address = data.getAddress();
 
-        if(userRepository.findByName(name).equals(Optional.empty()) &&
+        if(userRepository.findByName(name) == null &&
             userRepository.findByEmail(email) == null
         ){
             Users newUser = new Users(name, email, password, location, address);

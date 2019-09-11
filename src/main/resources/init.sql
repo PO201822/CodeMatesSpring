@@ -195,5 +195,5 @@ INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
     (2, 3, 3, 2100); --3
 
 INSERT INTO orders (user_id, courier_id, cart_id) VALUES
-	(1, 2, 1), --1
-    (1, 2, 2); --3
+	(1, 3, 1), --1
+    (1, 3, 2); --3

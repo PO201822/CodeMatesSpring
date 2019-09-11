@@ -128,11 +128,10 @@ after update on orders for each row
 execute procedure update_profit();
 
 INSERT INTO users (name, email, password, location, address) VALUES
-	 --1
-    ('user2', 'user2@user2.com', 'password2', 'Miskolc','address2'), --2
-    ('user3', 'user3@user3.com', 'password3', 'Miskolc','address3'); --3
+    ('u', 'user3@user3.com', 'u', 'Miskolc','address3'); --3
 INSERT INTO users(name, email, password, roles, location, address) values
-('user1', 'user1@user1.com', 'password1', ARRAY['ROLE_ADMIN'] , 'Miskolc','address1');
+('a', 'user1@user1.com', 'a', ARRAY['ROLE_ADMIN'] , 'Miskolc','address1'),
+('c', 'user2@user2.com', 'c', ARRAY['ROLE_COURIER'] , 'Miskolc','address2');
 
 
 INSERT INTO restaurants (name, location, picture, description) VALUES

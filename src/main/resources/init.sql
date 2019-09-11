@@ -74,7 +74,6 @@ CREATE TABLE orders(
     user_id int references users(id),
     courier_id int references users(id) check (courier_id != user_id),
     cart_id int references carts(id),
-    picked_up boolean default false,
     complete boolean default false
 );
 

@@ -30,8 +30,6 @@ public class Orders {
     @JsonIgnore
     private Users user;
 
-    private boolean pickedUp;
-
     private boolean complete;
 
     @OneToOne(targetEntity = Carts.class)

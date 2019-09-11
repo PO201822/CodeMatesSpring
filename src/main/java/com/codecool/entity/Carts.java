@@ -1,9 +1,13 @@
 package com.codecool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,7 @@ import java.util.List;
 @Table(name = "carts")
 @NamedQueries({
         @NamedQuery(name = "findAvailableCartsByUserId",
-                query="select c from Carts c where c.user = :user and c.checkedOut = false"),
+                query = "select c from Carts c where c.user = :user and c.checkedOut = false"),
 })
 public class Carts {
 
@@ -32,7 +36,9 @@ public class Carts {
 
     private boolean checkedOut;
 
-    @OneToOne(targetEntity = Orders.class,  mappedBy = "cart")
+    private LocalDateTime checkout_date;
+
+    @OneToOne(targetEntity = Orders.class, mappedBy = "cart")
     @JsonIgnore
     private Orders orders;
 

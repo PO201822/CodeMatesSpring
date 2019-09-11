@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -100,6 +101,7 @@ public class CartController {
                 .setParameter("user", user).getResultList();
 
         cartsList.get(0).setCheckedOut(true);
+        cartsList.get(0).setCheckout_date(LocalDateTime.now());
         cartRepository.save(cartsList.get(0));
     }
 

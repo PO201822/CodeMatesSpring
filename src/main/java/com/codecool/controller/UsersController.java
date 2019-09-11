@@ -1,13 +1,12 @@
 package com.codecool.controller;
 
+import com.codecool.dto.RoleDto;
 import com.codecool.entity.Users;
 import com.codecool.repository.UserRepository;
+import com.codecool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UsersController {
@@ -15,6 +14,9 @@ public class UsersController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PutMapping(path = "/profile")
     public @ResponseBody
@@ -35,5 +37,12 @@ public class UsersController {
 
         userRepository.save(userBU);
 
+    }
+
+    @PostMapping(path = "/getrole")
+    public @ResponseBody
+    RoleDto getUserRole() {
+        Users user = userRepository.findByName(userService.currentUser());
+        return new RoleDto(user.getRoles()[0]);
     }
 }

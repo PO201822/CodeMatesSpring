@@ -42,16 +42,19 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getAllJobs")
     public List<JobsDto> getAllJobs(){
-        List<Carts> allByCheckedOutAndPickedup = cartRepository.findAllByCheckedOutAndPickedup(true, false);
+        List<Carts> carts = cartRepository.findAllByCheckedOutAndPickedup(true, false);
+        if  (carts.size() == 0){
+            return null;
+        }
         List<JobsDto> jobsDtos = new ArrayList<>();
         int quantity = 0;
-        for (Carts c : allByCheckedOutAndPickedup){
+        for (Carts c : carts){
             List<CartItems> cartItems = c.getCartItems();
             for (CartItems ci : cartItems){
                 quantity += ci.getQuantity();
             }
         }
-        for (Carts c : allByCheckedOutAndPickedup){
+        for (Carts c : carts){
             jobsDtos.add(new JobsDto(c.getId(), c.getUser().getName(), c.getUser().getLocation(), c.getUser().getAddress(), quantity, c.getCheckout_date(), c.getCartItems()));
         }
         return jobsDtos;

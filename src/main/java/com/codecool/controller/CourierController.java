@@ -52,7 +52,7 @@ public class CourierController {
             }
         }
         for (Carts c : allByCheckedOutAndPickedup){
-            jobsDtos.add(new JobsDto(c.getId(), c.getUser().getName(), c.getUser().getLocation(), c.getUser().getAddress(), quantity, c.getCheckout_date()));
+            jobsDtos.add(new JobsDto(c.getId(), c.getUser().getName(), c.getUser().getLocation(), c.getUser().getAddress(), quantity, c.getCheckout_date(), c.getCartItems()));
         }
         return jobsDtos;
     }

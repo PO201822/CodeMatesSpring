@@ -12,7 +12,7 @@ public interface CartRepository extends JpaRepository<Carts, Integer> {
     @Override
     <S extends Carts> S save(S entity);
 
-    Carts findByUserId(int userId);
+    List<Carts> findAllByUserId(int userId);
 
     List<Carts> findAllByCheckedOutAndPickedup(boolean checkedOut, boolean pickedUp);
 

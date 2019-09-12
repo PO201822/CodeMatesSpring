@@ -58,7 +58,8 @@ CREATE TABLE carts(
 	user_id int references users(id),
 	price numeric default 0,
 	checked_out boolean default false,
-	checkout_date timestamp default null
+	checkout_date timestamp default null,
+	pickedup boolean default false
 );
 
 CREATE TABLE cart_items(
@@ -189,6 +190,9 @@ INSERT INTO menus (restaurant_id, product_id) VALUES
 INSERT INTO carts (user_id) VALUES
 	(1), --1
     (2); --2
+
+insert into carts(user_id, price, checked_out, checkout_date, pickedup)
+values (1, 0, true, null, false);
 INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
 	(1, 1, 2, 600), --1
     (1, 2, 1, 1000), --2

@@ -46,6 +46,8 @@ public class Carts {
     @JsonIgnore
     private List<CartItems> cartItems = new ArrayList<>();
 
+    private boolean pickedup;
+
     public Carts(Users user, Integer price, boolean checkedOut) {
         this.user = user;
         this.price = price;

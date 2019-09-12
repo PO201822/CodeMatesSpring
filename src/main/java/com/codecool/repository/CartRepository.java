@@ -4,6 +4,8 @@ import com.codecool.entity.Carts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CartRepository extends JpaRepository<Carts, Integer> {
 
@@ -11,4 +13,8 @@ public interface CartRepository extends JpaRepository<Carts, Integer> {
     <S extends Carts> S save(S entity);
 
     Carts findByUserId(int userId);
+
+    List<Carts> findAllByCheckedOutAndPickedup(boolean checkedOut, boolean pickedUp);
+
+    Carts findById(int id);
 }

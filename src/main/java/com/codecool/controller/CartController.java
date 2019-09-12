@@ -77,15 +77,16 @@ public class CartController {
     @GetMapping(path = "/myCart")
     public List<CartItems> getMyCart() {
         Users user = userRepository.findByName(userService.currentUser());
-        if(cartRepository.findByUserId(user.getId()) == null){
+        if(cartRepository.findAllByUserId(user.getId()).size() == 0){
+            //no cart yet
             return null;
         }
 
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
-        if (cartsList.get(0).getCartItems().size() == 0) {
-            //the cart is empty
+        if (cartsList.size() == 0) {
+            //none available
             return null;
         } else {
             return em.createNamedQuery("findCartItemsByCartId", CartItems.class)

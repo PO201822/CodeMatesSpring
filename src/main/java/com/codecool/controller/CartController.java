@@ -85,7 +85,7 @@ public class CartController {
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
-        if (cartsList.size() == 0) {
+        if (cartsList.size() == 0 || cartsList.get(0).getCartItems().size() == 0) {
             //none available
             return null;
         } else {

@@ -1,7 +1,6 @@
 package com.codecool.controller;
 
 import com.codecool.dto.CartIdDto;
-import com.codecool.dto.CartItemDto;
 import com.codecool.dto.JobsDto;
 import com.codecool.entity.CartItems;
 import com.codecool.entity.Carts;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CourierController {
@@ -41,20 +39,20 @@ public class CourierController {
     }
 
     @GetMapping(path = "/courier/getAllJobs")
-    public List<JobsDto> getAllJobs(){
+    public List<JobsDto> getAllJobs() {
         List<Carts> carts = cartRepository.findAllByCheckedOutAndPickedup(true, false);
-        if  (carts.size() == 0){
+        if (carts.size() == 0) {
             return null;
         }
         List<JobsDto> jobsDtos = new ArrayList<>();
         int quantity = 0;
-        for (Carts c : carts){
+        for (Carts c : carts) {
             List<CartItems> cartItems = c.getCartItems();
-            for (CartItems ci : cartItems){
+            for (CartItems ci : cartItems) {
                 quantity += ci.getQuantity();
             }
         }
-        for (Carts c : carts){
+        for (Carts c : carts) {
             jobsDtos.add(new JobsDto(c.getId(), c.getUser().getName(), c.getUser().getLocation(), c.getUser().getAddress(), quantity, c.getCheckout_date(), c.getCartItems()));
         }
         return jobsDtos;
@@ -62,7 +60,7 @@ public class CourierController {
 
     @PostMapping(path = "/courier/pickUpJob")
     @ResponseBody
-    void pickUpJob(@RequestBody CartIdDto cartId){
+    void pickUpJob(@RequestBody CartIdDto cartId) {
         Carts byId = cartRepository.findById(cartId.getCartId());
         byId.setPickedup(true);
         cartRepository.save(byId);

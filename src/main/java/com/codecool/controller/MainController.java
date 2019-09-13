@@ -17,7 +17,7 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path="/profile")
+    @PostMapping(path = "/profile")
     public Users getProfile() {
         return userRepository.findByName(userService.currentUser());
     }

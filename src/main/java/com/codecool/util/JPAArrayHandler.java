@@ -1,4 +1,5 @@
 package com.codecool.util;
+
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;

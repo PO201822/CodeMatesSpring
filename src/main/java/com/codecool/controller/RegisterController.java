@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 public class RegisterController {
     @Autowired
@@ -23,13 +21,12 @@ public class RegisterController {
         String location = data.getLocation();
         String address = data.getAddress();
 
-        if(userRepository.findByName(name) == null &&
-            userRepository.findByEmail(email) == null
-        ){
+        if (userRepository.findByName(name) == null &&
+                userRepository.findByEmail(email) == null
+        ) {
             Users newUser = new Users(name, email, password, location, address);
             return userRepository.save(newUser);
-        }
-        else {
+        } else {
             throw new BadCredentialsException("Email and/or username already exists!");
         }
     }

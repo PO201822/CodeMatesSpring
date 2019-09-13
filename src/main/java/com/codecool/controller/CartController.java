@@ -77,7 +77,7 @@ public class CartController {
     @GetMapping(path = "/myCart")
     public List<CartItems> getMyCart() {
         Users user = userRepository.findByName(userService.currentUser());
-        if(cartRepository.findAllByUserId(user.getId()).size() == 0){
+        if (cartRepository.findAllByUserId(user.getId()).size() == 0) {
             //no cart yet
             return null;
         }

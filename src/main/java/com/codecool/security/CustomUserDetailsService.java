@@ -33,6 +33,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println(userRepo.findByName(name));
         Users user = userRepo.findByName(name);
 
-        return new org.springframework.security.core.userdetails.User(user.getName(),encoder.encode(user.getPassword()), Arrays.asList(user.getRoles()).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        return new org.springframework.security.core.userdetails.User(user.getName(), encoder.encode(user.getPassword()), Arrays.asList(user.getRoles()).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
 }

@@ -191,8 +191,6 @@ INSERT INTO carts (user_id) VALUES
 	(1), --1
     (2); --2
 
-insert into carts(user_id, price, checked_out, checkout_date, pickedup)
-values (1, 0, true, null, false);
 INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
 	(1, 1, 2, 600), --1
     (1, 2, 1, 1000), --2

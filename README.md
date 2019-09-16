@@ -1,6 +1,8 @@
 # CodeMates
 > A food delivering service where costumers can browse the products of restaurants by location and order meals, Couriers are waiting for orders to pick up and deliver it to the costumer's address!
 
+![alt text](src/main/resources/header.png "CodeMates")
+
 ## Details
 
 ### Repository urls
@@ -29,7 +31,7 @@ ng serve -o
 ### Deploying and running the back end
 OS X & Linux:
 ```sh
-mvn clean package
+mvn spring-boot:run
 ```
 ### Note
 After the running and deploying for both the front end and the back end, the web app application will run in the browser under http://localhost:4200/ url.

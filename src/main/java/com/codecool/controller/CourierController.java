@@ -61,9 +61,12 @@ public class CourierController {
     @PostMapping(path = "/courier/pickUpJob")
     @ResponseBody
     void pickUpJob(@RequestBody CartIdDto cartId) {
-        Carts byId = cartRepository.findById(cartId.getCartId());
-        byId.setPickedup(true);
-        cartRepository.save(byId);
+        Users courier = userRepository.findByName(userService.currentUser());
+        Carts cart = cartRepository.findById(cartId.getCartId());
+        cart.setPickedup(true);
+        cartRepository.save(cart);
+        ordersRepository.save(new Orders(courier, cart.getUser(), false, cart));
+
     }
 
 }

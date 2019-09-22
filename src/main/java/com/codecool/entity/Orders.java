@@ -37,4 +37,10 @@ public class Orders {
     @JsonIgnore
     private Carts cart;
 
+    public Orders(Users courier, Users user, boolean complete, Carts cart) {
+        this.courier = courier;
+        this.user = user;
+        this.complete = complete;
+        this.cart = cart;
+    }
 }

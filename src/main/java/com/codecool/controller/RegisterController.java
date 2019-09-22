@@ -1,9 +1,9 @@
 package com.codecool.controller;
 
 import com.codecool.entity.Users;
+import com.codecool.exception.InvalidUserCredentialsException;
 import com.codecool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,20 +14,13 @@ public class RegisterController {
     private UserRepository userRepository;
 
     @PostMapping("/register")
-    public Users register(@RequestBody Users data) {
-        String name = data.getName();
-        String password = data.getPassword();
-        String email = data.getEmail();
-        String location = data.getLocation();
-        String address = data.getAddress();
+    public Users register(@RequestBody Users user) {
 
-        if (userRepository.findByName(name) == null &&
-                userRepository.findByEmail(email) == null
-        ) {
-            Users newUser = new Users(name, email, password, location, address);
-            return userRepository.save(newUser);
+        if (userRepository.findByName(user.getName()) == null
+                && userRepository.findByEmail(user.getEmail()) == null) {
+            return userRepository.save(user);
         } else {
-            throw new BadCredentialsException("Email and/or username already exists!");
+            throw new InvalidUserCredentialsException("Email and/or username already exists!");
         }
     }
 }

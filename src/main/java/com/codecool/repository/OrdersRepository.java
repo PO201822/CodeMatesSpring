@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
+    @Override
+    <S extends Orders> S save(S entity);
 
     List<Orders> findAllByCourierId(int courierId);
 }

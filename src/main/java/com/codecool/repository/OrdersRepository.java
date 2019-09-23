@@ -12,5 +12,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     @Override
     <S extends Orders> S save(S entity);
 
-    List<Orders> findAllByCourierId(int courierId);
+    List<Orders> findAllByCourierIdAndComplete(int courierId, boolean complete);
+
+    Orders findById(int id);
 }

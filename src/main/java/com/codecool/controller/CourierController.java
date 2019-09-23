@@ -91,10 +91,44 @@ public class CourierController {
 
     @PutMapping(path = "/courier/completeOrder")
     public @ResponseBody
-    void updateProfile(@RequestBody OrderIdDto orderId) {
+    void completeOrder(@RequestBody OrderIdDto orderId) {
         Orders orders = ordersRepository.findById(orderId.getOrderId());
         orders.setComplete(true);
         orders.setComplition_date(LocalDateTime.now());
         ordersRepository.save(orders);
+    }
+
+    @PutMapping(path = "/courier/dismissOrder")
+    public @ResponseBody
+    void dismissOrder(@RequestBody OrderIdDto orderId) {
+        Orders orders = ordersRepository.findById(orderId.getOrderId());
+        orders.getCart().setPickedup(false);
+        Carts cart = cartRepository.findById(orders.getCart().getId());
+        cart.setPickedup(false);
+        cartRepository.save(cart);
+        ordersRepository.delete(orders);
+    }
+
+    @GetMapping(path = "/courier/getCompleted")
+    public List<CourierOrderDto> getCompleted() {
+        Users user = userRepository.findByName(userService.currentUser());
+        List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), true);
+
+        List<CourierOrderDto> courierOrderDtoList = new ArrayList<>();
+        for (Orders o : allByCourierId) {
+            List<CartItems> cartItems = o.getCart().getCartItems();
+            Carts carts = o.getCart();
+            int quantity = 0;
+            for (CartItems ci : cartItems) {
+                quantity += ci.getQuantity();
+            }
+
+            JobsDto jobsDto = new JobsDto(carts.getId(), carts.getUser().getName(), carts.getUser().getLocation(), carts.getUser().getAddress(),
+                    quantity, carts.getCheckout_date(), carts.getCartItems());
+            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete()));
+
+        }
+
+        return courierOrderDtoList;
     }
 }

@@ -75,7 +75,8 @@ CREATE TABLE orders(
     user_id int references users(id),
     courier_id int references users(id) check (courier_id != user_id),
     cart_id int references carts(id),
-    complete boolean default false
+    complete boolean default false,
+    complition_date timestamp default null
 );
 
 create or replace function total_cart_price()
@@ -188,5 +189,3 @@ INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES
     (1, 2, 1, 1000), --2
     (2, 3, 3, 2100); --3
 
-INSERT INTO orders (user_id, courier_id, cart_id) VALUES
-    (1, 3, 2); --1

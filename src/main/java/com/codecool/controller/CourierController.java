@@ -40,6 +40,10 @@ public class CourierController {
         Users user = userRepository.findByName(userService.currentUser());
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), false);
 
+        if (allByCourierId.size() == 0){
+            return null;
+        }
+
         List<CourierOrderDto> courierOrderDtoList = new ArrayList<>();
         for (Orders o : allByCourierId) {
             List<CartItems> cartItems = o.getCart().getCartItems();
@@ -114,6 +118,10 @@ public class CourierController {
         Users user = userRepository.findByName(userService.currentUser());
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), true);
 
+        if (allByCourierId.size() == 0){
+            return null;
+        }
+
         List<CourierOrderDto> courierOrderDtoList = new ArrayList<>();
         for (Orders o : allByCourierId) {
             List<CartItems> cartItems = o.getCart().getCartItems();
@@ -125,7 +133,7 @@ public class CourierController {
 
             JobsDto jobsDto = new JobsDto(carts.getId(), carts.getUser().getName(), carts.getUser().getLocation(), carts.getUser().getAddress(),
                     quantity, carts.getCheckout_date(), carts.getCartItems());
-            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete()));
+            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete(),o.getComplition_date()));
 
         }
 

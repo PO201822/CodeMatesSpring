@@ -1,7 +1,9 @@
 package com.codecool.controller;
 
 import com.codecool.dto.CartIdDto;
+import com.codecool.dto.CourierOrderDto;
 import com.codecool.dto.JobsDto;
+import com.codecool.dto.OrderIdDto;
 import com.codecool.entity.CartItems;
 import com.codecool.entity.Carts;
 import com.codecool.entity.Orders;
@@ -13,6 +15,7 @@ import com.codecool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +36,26 @@ public class CourierController {
     private CartRepository cartRepository;
 
     @GetMapping(path = "/courier/getMyCurrentJobs")
-    public List<Orders> getMyCurrentJobs() {
+    public List<CourierOrderDto> getMyCurrentJobs() {
         Users user = userRepository.findByName(userService.currentUser());
-        return ordersRepository.findAllByCourierId(user.getId());
+        List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), false);
+
+        List<CourierOrderDto> courierOrderDtoList = new ArrayList<>();
+        for (Orders o : allByCourierId) {
+            List<CartItems> cartItems = o.getCart().getCartItems();
+            Carts carts = o.getCart();
+            int quantity = 0;
+            for (CartItems ci : cartItems) {
+                quantity += ci.getQuantity();
+            }
+
+            JobsDto jobsDto = new JobsDto(carts.getId(), carts.getUser().getName(), carts.getUser().getLocation(), carts.getUser().getAddress(),
+                    quantity, carts.getCheckout_date(), carts.getCartItems());
+            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete()));
+
+        }
+
+        return courierOrderDtoList;
     }
 
     @GetMapping(path = "/courier/getAllJobs")
@@ -69,4 +89,12 @@ public class CourierController {
 
     }
 
+    @PutMapping(path = "/courier/completeOrder")
+    public @ResponseBody
+    void updateProfile(@RequestBody OrderIdDto orderId) {
+        Orders orders = ordersRepository.findById(orderId.getOrderId());
+        orders.setComplete(true);
+        orders.setComplition_date(LocalDateTime.now());
+        ordersRepository.save(orders);
+    }
 }

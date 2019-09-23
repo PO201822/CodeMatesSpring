@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedQueries({
@@ -36,6 +38,8 @@ public class Orders {
     @JoinColumn
     @JsonIgnore
     private Carts cart;
+
+    private LocalDateTime complition_date;
 
     public Orders(Users courier, Users user, boolean complete, Carts cart) {
         this.courier = courier;

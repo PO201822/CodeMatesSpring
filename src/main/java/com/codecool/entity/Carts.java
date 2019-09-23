@@ -25,7 +25,7 @@ public class Carts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn

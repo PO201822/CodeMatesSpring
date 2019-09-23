@@ -115,7 +115,7 @@ create trigger update_rating
 after insert on ratings for each row
 execute procedure update_rating();
 
-create or replace function update_profit()
+/*create or replace function update_profit()
 returns trigger as '
 begin
 update users set profit = (select sum(carts.price / 100 * users.cut) from carts
@@ -127,7 +127,7 @@ end;
 
 create trigger update_profit
 after update on orders for each row
-execute procedure update_profit();
+execute procedure update_profit();*/
 
 INSERT INTO users (name, email, password, location, address) VALUES
     ('u', 'user3@user3.com', 'u', 'Miskolc','address3'); --3

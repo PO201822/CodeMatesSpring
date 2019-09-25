@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @RestController
+@RequestMapping("/public")
 public class RestaurantsController {
     @PersistenceContext
     private EntityManager em;

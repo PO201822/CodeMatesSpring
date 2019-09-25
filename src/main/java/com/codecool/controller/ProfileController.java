@@ -24,9 +24,13 @@ public class ProfileController {
         return userRepository.findByName(userService.currentUser());
     }
 
-    @GetMapping(path = "/getLocation")
+    @GetMapping(path = "/public/getLocation")
     public UserLocationDto getLocation() {
-        return new UserLocationDto(userRepository.findByName(userService.currentUser()).getLocation());
+        if (userService.currentUser().equals("anonymousUser")) {
+            return new UserLocationDto("Miskolc");
+        } else {
+            return new UserLocationDto(userRepository.findByName(userService.currentUser()).getLocation());
+        }
     }
 
     @GetMapping(path = "/getRole")

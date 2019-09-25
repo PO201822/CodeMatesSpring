@@ -15,4 +15,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     List<Orders> findAllByCourierIdAndComplete(int courierId, boolean complete);
 
     Orders findById(int id);
+
+    Orders findByCartId(int cartId);
 }

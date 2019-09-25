@@ -1,15 +1,10 @@
 package com.codecool.controller;
 
 import com.codecool.dto.CartItemDto;
+import com.codecool.dto.CartOrderDto;
 import com.codecool.dto.OrderDto;
-import com.codecool.entity.CartItems;
-import com.codecool.entity.Carts;
-import com.codecool.entity.Products;
-import com.codecool.entity.Users;
-import com.codecool.repository.CartItemsRepository;
-import com.codecool.repository.CartRepository;
-import com.codecool.repository.ProductsRepository;
-import com.codecool.repository.UserRepository;
+import com.codecool.entity.*;
+import com.codecool.repository.*;
 import com.codecool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,6 +34,9 @@ public class CartController {
 
     @Autowired
     private ProductsRepository productsRepository;
+
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -125,5 +124,27 @@ public class CartController {
                 .setParameter("user", user).getResultList();
 
         em.createNamedQuery("deleteProductFromCart").setParameter("product", byId).setParameter("cart", cartsList.get(0)).executeUpdate();
+    }
+
+    @GetMapping(path = "/getOrders")
+    public List<CartOrderDto> getOrders() {
+        Users user = userRepository.findByName(userService.currentUser());
+        List<CartOrderDto> cartOrderDtos = new ArrayList<>();
+        List<Carts> carts = cartRepository.findAllByUserIdAndCheckedOut(user.getId(),true);
+        if (carts.size() == 0){
+            return null;
+        }
+
+        for (Carts cart : carts){
+            boolean isCompleted = false;
+            LocalDateTime completionDate = null;
+            if (cart.isPickedup()){
+                Orders order = ordersRepository.findByCartId(cart.getId());
+                isCompleted = true;
+                completionDate = order.getComplition_date();
+            }
+            cartOrderDtos.add(new CartOrderDto(cart, isCompleted, completionDate));
+        }
+        return cartOrderDtos;
     }
 }

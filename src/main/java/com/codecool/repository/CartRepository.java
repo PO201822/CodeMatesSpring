@@ -16,5 +16,7 @@ public interface CartRepository extends JpaRepository<Carts, Integer> {
 
     List<Carts> findAllByCheckedOutAndPickedup(boolean checkedOut, boolean pickedUp);
 
+    List<Carts> findAllByUserIdAndCheckedOut(int userId, boolean checkedOut);
+
     Carts findById(int id);
 }

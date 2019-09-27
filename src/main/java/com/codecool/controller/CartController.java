@@ -5,7 +5,7 @@ import com.codecool.dto.CartOrderDto;
 import com.codecool.dto.OrderDto;
 import com.codecool.entity.*;
 import com.codecool.repository.*;
-import com.codecool.service.UserService;
+import com.codecool.service.Simple.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.List;
 public class CartController {
 
     @Autowired
-    private UserService userService;
+    private SimpleUserService simpleUserService;
 
     @Autowired
     private UserRepository userRepository;
@@ -46,7 +46,7 @@ public class CartController {
         int productId = orderDto.getProductId();
         int quantity = orderDto.getQuantity();
         Products products = productsRepository.findById(productId);
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
 
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
@@ -75,7 +75,7 @@ public class CartController {
 
     @GetMapping(path = "/myCart")
     public List<CartItems> getMyCart() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         if (cartRepository.findAllByUserId(user.getId()).size() == 0) {
             //no cart yet
             return null;
@@ -96,7 +96,7 @@ public class CartController {
     @PutMapping(path = "/checkout")
     public @ResponseBody
     void checkoutCart() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
@@ -108,7 +108,7 @@ public class CartController {
     @PutMapping(path = "/updateCartItemQuantity")
     public @ResponseBody
     void updateCartItems(@RequestBody CartItemDto cartItemDto) {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         CartItems cartItems = cartItemsRepository.findById(cartItemDto.getCartItemId());
         cartItems.setQuantity(cartItemDto.getQuantity());
         cartItemsRepository.save(cartItems);
@@ -119,7 +119,7 @@ public class CartController {
     public @ResponseBody
     void deleteFromCart(@RequestParam int productId) {
         Products byId = productsRepository.findById(productId);
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         List<Carts> cartsList = em.createNamedQuery("findAvailableCartsByUserId", Carts.class)
                 .setParameter("user", user).getResultList();
 
@@ -128,7 +128,7 @@ public class CartController {
 
     @GetMapping(path = "/getOrders")
     public List<CartOrderDto> getOrders() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         List<CartOrderDto> cartOrderDtos = new ArrayList<>();
         List<Carts> carts = cartRepository.findAllByUserIdAndCheckedOut(user.getId(),true);
         if (carts.size() == 0){

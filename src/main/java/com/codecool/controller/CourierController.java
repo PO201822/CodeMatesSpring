@@ -11,7 +11,7 @@ import com.codecool.entity.Users;
 import com.codecool.repository.CartRepository;
 import com.codecool.repository.OrdersRepository;
 import com.codecool.repository.UserRepository;
-import com.codecool.service.UserService;
+import com.codecool.service.Simple.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ public class CourierController {
 
 
     @Autowired
-    private UserService userService;
+    private SimpleUserService simpleUserService;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,7 +37,7 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getMyCurrentJobs")
     public List<CourierOrderDto> getMyCurrentJobs() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), false);
 
         if (allByCourierId.size() == 0){
@@ -75,8 +75,6 @@ public class CourierController {
             for (CartItems ci : cartItems) {
                 quantity += ci.getQuantity();
             }
-        }
-        for (Carts c : carts) {
             jobsDtos.add(new JobsDto(c.getId(), c.getUser().getName(), c.getUser().getLocation(), c.getUser().getAddress(), quantity, c.getCheckout_date(), c.getCartItems()));
         }
         return jobsDtos;
@@ -85,7 +83,7 @@ public class CourierController {
     @PostMapping(path = "/courier/pickUpJob")
     @ResponseBody
     void pickUpJob(@RequestBody CartIdDto cartId) {
-        Users courier = userRepository.findByName(userService.currentUser());
+        Users courier = userRepository.findByName(simpleUserService.getCurrentUser());
         Carts cart = cartRepository.findById(cartId.getCartId());
         cart.setPickedup(true);
         cartRepository.save(cart);
@@ -115,7 +113,7 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getCompleted")
     public List<CourierOrderDto> getCompleted() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), true);
 
         if (allByCourierId.size() == 0){

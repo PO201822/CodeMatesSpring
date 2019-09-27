@@ -5,7 +5,7 @@ import com.codecool.dto.UserLocationDto;
 import com.codecool.entity.Users;
 import com.codecool.exception.InvalidUserCredentialsException;
 import com.codecool.repository.UserRepository;
-import com.codecool.service.UserService;
+import com.codecool.service.Simple.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,28 +14,28 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     @Autowired
-    private UserService userService;
+    private SimpleUserService simpleUserService;
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping(path = "/getProfile")
     public Users getProfile() {
-        return userRepository.findByName(userService.currentUser());
+        return userRepository.findByName(simpleUserService.getCurrentUser());
     }
 
     @GetMapping(path = "/public/getLocation")
     public UserLocationDto getLocation() {
-        if (userService.currentUser().equals("anonymousUser")) {
+        if (simpleUserService.getCurrentUser().equals("anonymousUser")) {
             return new UserLocationDto("Miskolc");
         } else {
-            return new UserLocationDto(userRepository.findByName(userService.currentUser()).getLocation());
+            return new UserLocationDto(userRepository.findByName(simpleUserService.getCurrentUser()).getLocation());
         }
     }
 
     @GetMapping(path = "/getRole")
     public RoleDto getRole() {
-        Users user = userRepository.findByName(userService.currentUser());
+        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
         return new RoleDto(user.getRoles()[0]);
     }
 

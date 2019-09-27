@@ -67,5 +67,9 @@ public class Users {
         this.address = address;
     }
 
-
+    public Users(String name, String location, String address) {
+        this.name = name;
+        this.location = location;
+        this.address = address;
+    }
 }

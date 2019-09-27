@@ -138,12 +138,22 @@ public class CartController {
         for (Carts cart : carts){
             boolean isCompleted = false;
             LocalDateTime completionDate = null;
+            int quantity = 0;
+            int total = 0;
+            String status = "Waiting for pick up";
+            Users costumer = new Users(cart.getUser().getName(), cart.getUser().getLocation(), cart.getUser().getAddress());
+            for (CartItems cartItem : cart.getCartItems() ){
+                quantity+= cartItem.getQuantity();
+                total+= cartItem.getQuantity()* cartItem.getPrice();
+            }
             if (cart.isPickedup()){
                 Orders order = ordersRepository.findByCartId(cart.getId());
-                isCompleted = true;
+                isCompleted = order.isComplete();
+                status = isCompleted? "Completed" : "Delivering";
                 completionDate = order.getComplition_date();
+
             }
-            cartOrderDtos.add(new CartOrderDto(cart, isCompleted, completionDate));
+            cartOrderDtos.add(new CartOrderDto(cart, isCompleted, completionDate,cart.getCartItems(),quantity,total,status,costumer));
         }
         return cartOrderDtos;
     }

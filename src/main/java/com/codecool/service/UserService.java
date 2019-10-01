@@ -1,6 +1,16 @@
 package com.codecool.service;
 
+import com.codecool.dto.UserLocationDto;
+import com.codecool.entity.Users;
+
 public interface UserService {
 
-    String getCurrentUser();
+    Users getCurrentUser();
+
+    void registerUser(Users user);
+
+    UserLocationDto getLocation();
+
+    void updateProfile(Users updatedUser);
+
 }

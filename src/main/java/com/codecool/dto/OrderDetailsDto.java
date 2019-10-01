@@ -1,6 +1,6 @@
 package com.codecool.dto;
 
-import com.codecool.model.CartItemsDetail;
+import com.codecool.model.CartItemDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ public class OrderDetailsDto {
 
     private boolean isCompleted;
     private LocalDateTime completionDate;
-    private CartItemsDetail cartItemsDetail;
+    private CartItemDetail cartItemDetail;
     private String status;
 
 }

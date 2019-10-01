@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class CartItemsDetail {
+public class CartItemDetail {
 
     private int totalPrice;
     private int quantity;

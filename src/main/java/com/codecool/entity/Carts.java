@@ -17,10 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "carts")
-@NamedQueries({
-        @NamedQuery(name = "findAvailableCartsByUserId",
-                query = "select c from Carts c where c.user = :user and c.checkedOut = false"),
-})
 public class Carts {
 
     @Id

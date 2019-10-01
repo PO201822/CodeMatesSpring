@@ -6,6 +6,8 @@ import com.codecool.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CartItemsRepository extends JpaRepository<CartItems, Integer> {
     @Override
@@ -14,4 +16,6 @@ public interface CartItemsRepository extends JpaRepository<CartItems, Integer> {
     CartItems findById(int id);
 
     void deleteByProductAndCart_User(Products p, Users user);
+
+    List<CartItems> findAllByCartId(int cartId);
 }

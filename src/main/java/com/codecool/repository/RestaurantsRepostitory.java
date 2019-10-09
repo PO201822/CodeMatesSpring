@@ -12,4 +12,7 @@ public interface RestaurantsRepostitory extends JpaRepository<Restaurants, Integ
     List<Restaurants> findByLocationIgnoreCase(String location);
     Restaurants findById(int id);
 
+    @Override
+    <S extends Restaurants> S save(S entity);
+
 }

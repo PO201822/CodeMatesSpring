@@ -42,5 +42,12 @@ public class Restaurants {
     @OneToMany(mappedBy = "users")
     @JsonIgnore
     private List<Ratings> ratings = new ArrayList<>();
+
+    public Restaurants(String name, String location, String picture, String description) {
+        this.name = name;
+        this.location = location;
+        this.picture = picture;
+        this.description = description;
+    }
 }
 

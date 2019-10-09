@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,35 +69,16 @@ public class AuthController {
     }
 
     @PostMapping("/googlesignin")
-    public ResponseEntity login(@RequestBody GoogleUser googleUser) {
-        try {
+    public UserCredentials login(@RequestBody GoogleUser googleUser) {
+        String email = googleUser.getEmail();
+        String name = email.split("@")[0];
+        String password = googleUser.getId();
 
-            String email = googleUser.getEmail();
-            String username = email.split("@")[0];
-            String id = googleUser.getId();
-            List<Users> users = new ArrayList<>();
-            users.add(userRepository.findByName(username));
-
-            if (userRepository.findByName(username) == null){
-                simpleUserService.registerUser(new Users(username, email, String.valueOf(id.hashCode()), "Miskolc", "Address"));
-            }
-
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, String.valueOf(id.hashCode())));
-            List<String> roles = authentication.getAuthorities()
-                    .stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
-
-            String token = jwtTokenServices.createToken(username, roles);
-
-            Map<Object, Object> model = new HashMap<>();
-            model.put("name", username);
-            model.put("roles", roles);
-            model.put("token", token);
-            return ResponseEntity.ok(model);
-        } catch (AuthenticationException e) {
-            throw new InvalidUserCredentialsException("Invalid username/password supplied");
+        if (userRepository.findByName(name) == null){
+            simpleUserService.registerUser(new Users(name, email, password, "Miskolc", "Address"));
         }
+
+        return new UserCredentials(name,password);
     }
 }
 

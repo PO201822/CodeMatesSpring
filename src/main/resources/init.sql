@@ -41,14 +41,14 @@ CREATE TABLE products(
 );
 
 CREATE TABLE ratings(
-    restaurant_id int references restaurants(id),
+    restaurant_id int references restaurants(id) ON DELETE CASCADE,
     user_id int references users(id) unique,
     rating numeric check (rating > 0),
     primary key (restaurant_id, user_id)
 );
 
 CREATE TABLE menus(
-    restaurant_id int references restaurants(id),
+    restaurant_id int references restaurants(id) ON DELETE CASCADE,
     product_id int references products(id),
     primary key (product_id, restaurant_id)
 );

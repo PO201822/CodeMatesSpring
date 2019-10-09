@@ -15,4 +15,10 @@ public interface RestaurantsRepostitory extends JpaRepository<Restaurants, Integ
     @Override
     <S extends Restaurants> S save(S entity);
 
+    List<Restaurants> findAll();
+
+    Restaurants findByNameAndLocation(String name, String location);
+
+    @Override
+    void delete(Restaurants restaurants);
 }

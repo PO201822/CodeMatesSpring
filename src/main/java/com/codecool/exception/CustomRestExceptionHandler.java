@@ -15,4 +15,10 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, e.getLocalizedMessage());
         return new ResponseEntity<Object>(apiError, apiError.getStatus());
     }
+
+    @ExceptionHandler({RestaurantAlreadyExistsException.class})
+    public ResponseEntity<Object> handleRestaurantAlreadyExistsException(RestaurantAlreadyExistsException e) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+        return new ResponseEntity<Object>(apiError, apiError.getStatus());
+    }
 }

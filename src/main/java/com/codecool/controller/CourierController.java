@@ -11,7 +11,7 @@ import com.codecool.entity.Users;
 import com.codecool.repository.CartRepository;
 import com.codecool.repository.OrdersRepository;
 import com.codecool.repository.UserRepository;
-import com.codecool.service.Simple.SimpleUserService;
+import com.codecool.service.simple.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +37,7 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getMyCurrentJobs")
     public List<CourierOrderDto> getMyCurrentJobs() {
-        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
+        Users user = simpleUserService.getCurrentUser();
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), false);
 
         if (allByCourierId.size() == 0){
@@ -83,7 +83,7 @@ public class CourierController {
     @PostMapping(path = "/courier/pickUpJob")
     @ResponseBody
     void pickUpJob(@RequestBody CartIdDto cartId) {
-        Users courier = userRepository.findByName(simpleUserService.getCurrentUser());
+        Users courier = simpleUserService.getCurrentUser();
         Carts cart = cartRepository.findById(cartId.getCartId());
         cart.setPickedup(true);
         cartRepository.save(cart);
@@ -113,7 +113,7 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getCompleted")
     public List<CourierOrderDto> getCompleted() {
-        Users user = userRepository.findByName(simpleUserService.getCurrentUser());
+        Users user = simpleUserService.getCurrentUser();
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), true);
 
         if (allByCourierId.size() == 0){

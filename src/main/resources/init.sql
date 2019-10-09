@@ -11,7 +11,7 @@ CREATE TABLE users(
     id serial primary key,
     name text unique not null,
     email text unique not null,
-    password varchar(10) not null,
+    password varchar not null,
     roles text[] default ARRAY['ROLE_USER'],
     location text not null,
     address text not null,

@@ -22,7 +22,7 @@ CREATE TABLE users(
 
 CREATE TABLE restaurants(
     id serial primary key,
-    name text unique not null,
+    name text not null,
     location text not null,
     rating numeric default 0,
     max_cut numeric default 100,

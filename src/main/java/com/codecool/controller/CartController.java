@@ -30,9 +30,6 @@ public class CartController {
     private CartService simpleCartService;
 
     @Autowired
-    private CartItemsService simpleCartItemsService;
-
-    @Autowired
     private OrderService simpleOrderService;
 
 
@@ -67,21 +64,6 @@ public class CartController {
 
     @GetMapping(path = "/getOrders")
     public List<CartOrderDto> getOrders() {
-        List<CartOrderDto> cartOrderDtos = new ArrayList<>();
-        List<Carts> carts = simpleCartService.getAvailableCarts(simpleUserService.getCurrentUser());
-        if (carts.size() == 0) {
-            return null;
-        }
-
-        for (Carts cart : carts) {
-            OrderDetailsDto orderDetails = new OrderDetailsDto(false, null, new CartItemDetail(0, 0), "Waiting for pick up");
-            CartItemDetail cartItemDetail = simpleCartItemsService.calculateCartItemsDetail(cart);
-            if (cart.isPickedup()) {
-                Orders order = simpleOrderService.findByCartId(cart.getId());
-                simpleOrderService.updateOrderDetailsDtoByOrder(orderDetails, order);
-            }
-            cartOrderDtos.add(new CartOrderDto(cart, cart.getCartItems(), cartItemDetail, cart.getUser(), orderDetails.getStatus()));
-        }
-        return cartOrderDtos;
+        return simpleOrderService.getOrders();
     }
 }

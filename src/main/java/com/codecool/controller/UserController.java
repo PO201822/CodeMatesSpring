@@ -15,9 +15,6 @@ public class UserController {
     @Autowired
     private SimpleUserService simpleUserService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @GetMapping(path = "/getProfile")
     public Users getProfile() {
         return simpleUserService.getCurrentUser();

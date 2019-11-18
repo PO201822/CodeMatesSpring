@@ -2,13 +2,8 @@ package com.codecool.controller;
 
 import com.codecool.dto.CartItemDto;
 import com.codecool.dto.CartOrderDto;
-import com.codecool.dto.OrderDetailsDto;
 import com.codecool.dto.OrderDto;
 import com.codecool.entity.CartItems;
-import com.codecool.entity.Carts;
-import com.codecool.entity.Orders;
-import com.codecool.model.CartItemDetail;
-import com.codecool.service.CartItemsService;
 import com.codecool.service.CartService;
 import com.codecool.service.OrderService;
 import com.codecool.service.UserService;
@@ -16,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 @RestController
 public class CartController {

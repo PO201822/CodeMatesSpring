@@ -21,16 +21,10 @@ import java.util.Optional;
 public class SimpleCartService implements CartService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private CartRepository cartRepository;
 
     @Autowired
     private CartItemsRepository cartItemsRepository;
-
-    @Autowired
-    private OrdersRepository ordersRepository;
 
     @Autowired
     private ProductsRepository productsRepository;

@@ -74,11 +74,11 @@ public class AuthController {
         String name = email.split("@")[0];
         String password = googleUser.getId();
 
-        if (userRepository.findByName(name) == null){
+        if (userRepository.findByName(name) == null) {
             simpleUserService.registerUser(new Users(name, email, password, "Miskolc", "Address"));
         }
 
-        return new UserCredentials(name,password);
+        return new UserCredentials(name, password);
     }
 }
 

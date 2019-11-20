@@ -33,7 +33,7 @@ public class SimpleCourierService implements CourierService {
         Users user = simpleUserService.getCurrentUser();
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), false);
 
-        if (allByCourierId.size() == 0){
+        if (allByCourierId.size() == 0) {
             return null;
         }
 
@@ -78,7 +78,7 @@ public class SimpleCourierService implements CourierService {
         Users user = simpleUserService.getCurrentUser();
         List<Orders> allByCourierId = ordersRepository.findAllByCourierIdAndComplete(user.getId(), true);
 
-        if (allByCourierId.size() == 0){
+        if (allByCourierId.size() == 0) {
             return null;
         }
 
@@ -93,7 +93,7 @@ public class SimpleCourierService implements CourierService {
 
             JobsDto jobsDto = new JobsDto(carts.getId(), carts.getUser().getName(), carts.getUser().getLocation(), carts.getUser().getAddress(),
                     quantity, carts.getCheckout_date(), carts.getCartItems());
-            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete(),o.getComplition_date()));
+            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete(), o.getComplition_date()));
 
         }
 

@@ -16,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "findRatedRestaurants",
-                query="select distinct r from Restaurants r inner join r.ratings rate where rate.user_id = :iduser"),
-       })
+                query = "select distinct r from Restaurants r inner join r.ratings rate where rate.user_id = :iduser"),
+})
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

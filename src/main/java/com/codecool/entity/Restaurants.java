@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NamedQueries({
         @NamedQuery(name = "findsomething",
-                query="select distinct r from Restaurants r inner join r.products p where p.name = :prodname"),
+                query = "select distinct r from Restaurants r inner join r.products p where p.name = :prodname"),
 })
 public class Restaurants {
 

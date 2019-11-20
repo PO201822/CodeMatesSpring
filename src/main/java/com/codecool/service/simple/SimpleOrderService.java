@@ -39,7 +39,7 @@ public class SimpleOrderService implements OrderService {
 
     }
 
-    public OrderDetailsDto updateOrderDetailsDtoByOrder(OrderDetailsDto orderDetails, Orders order){
+    public OrderDetailsDto updateOrderDetailsDtoByOrder(OrderDetailsDto orderDetails, Orders order) {
         orderDetails.setCompleted(order.isComplete());
         String status = order.isComplete() ? "Completed" : "Delivering";
         orderDetails.setStatus(status);

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "findOrders",
-                query="select o from Orders o join o.user user where user.name = :username"),
+                query = "select o from Orders o join o.user user where user.name = :username"),
 })
 public class Orders {
 

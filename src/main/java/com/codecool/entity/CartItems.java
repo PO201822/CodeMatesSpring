@@ -13,9 +13,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "findCartItemsByCartId",
-                query="select distinct ci from CartItems ci inner join ci.cart c where c.id = :cart_id"),
+                query = "select distinct ci from CartItems ci inner join ci.cart c where c.id = :cart_id"),
         @NamedQuery(name = "deleteProductFromCart",
-                query="delete from CartItems ci where ci.product = :product and ci.cart = :cart"),
+                query = "delete from CartItems ci where ci.product = :product and ci.cart = :cart"),
 })
 public class CartItems {
     @Id

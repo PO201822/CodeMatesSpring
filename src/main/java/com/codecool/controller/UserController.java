@@ -3,7 +3,6 @@ package com.codecool.controller;
 import com.codecool.dto.RoleDto;
 import com.codecool.dto.UserLocationDto;
 import com.codecool.entity.Users;
-import com.codecool.repository.UserRepository;
 import com.codecool.service.simple.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

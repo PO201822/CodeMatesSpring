@@ -10,6 +10,7 @@ import java.util.List;
 public interface RestaurantsRepostitory extends JpaRepository<Restaurants, Integer> {
 
     List<Restaurants> findByLocationIgnoreCase(String location);
+
     Restaurants findById(int id);
 
     @Override

@@ -93,7 +93,7 @@ public class SimpleCourierService implements CourierService {
 
             JobsDto jobsDto = new JobsDto(carts.getId(), carts.getUser().getName(), carts.getUser().getLocation(), carts.getUser().getAddress(),
                     quantity, carts.getCheckout_date(), carts.getCartItems());
-            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete(), o.getComplition_date()));
+            courierOrderDtoList.add(new CourierOrderDto(jobsDto, o.getId(), o.isComplete(), o.getCompletion_date()));
 
         }
 

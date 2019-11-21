@@ -39,7 +39,7 @@ public class Orders {
     @JsonIgnore
     private Carts cart;
 
-    private LocalDateTime complition_date;
+    private LocalDateTime completion_date;
 
     public Orders(Users courier, Users user, boolean complete, Carts cart) {
         this.courier = courier;

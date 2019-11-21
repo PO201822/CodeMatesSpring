@@ -76,7 +76,7 @@ CREATE TABLE orders(
     courier_id int references users(id) check (courier_id != user_id),
     cart_id int references carts(id),
     complete boolean default false,
-    complition_date timestamp default null
+    completion_date timestamp default null
 );
 
 create or replace function total_cart_price()
@@ -115,19 +115,6 @@ create trigger update_rating
 after insert on ratings for each row
 execute procedure update_rating();
 
-/*create or replace function update_profit()
-returns trigger as '
-begin
-update users set profit = (select sum(carts.price / 100 * users.cut) from carts
-                           join orders on orders.courier_id = users.id and orders.cart_id = carts.id and orders.complete is true
-						   where users.id = orders.courier_id);
-return new;
-end;
-' language plpgsql;
-
-create trigger update_profit
-after update on orders for each row
-execute procedure update_profit();*/
 
 INSERT INTO users (name, email, password, location, address) VALUES
     ('u', 'user3@user3.com', 'u', 'Miskolc','address3'); --3

@@ -43,7 +43,7 @@ public class SimpleOrderService implements OrderService {
         orderDetails.setCompleted(order.isComplete());
         String status = order.isComplete() ? "Completed" : "Delivering";
         orderDetails.setStatus(status);
-        orderDetails.setCompletionDate(order.getComplition_date());
+        orderDetails.setCompletionDate(order.getCompletion_date());
         return orderDetails;
     }
 

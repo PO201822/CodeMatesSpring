@@ -60,7 +60,7 @@ public class CourierController {
     void completeOrder(@RequestBody OrderIdDto orderId) {
         Orders orders = ordersRepository.findById(orderId.getOrderId());
         orders.setComplete(true);
-        orders.setComplition_date(LocalDateTime.now());
+        orders.setCompletion_date(LocalDateTime.now());
         ordersRepository.save(orders);
     }
 

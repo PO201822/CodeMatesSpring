@@ -77,6 +77,6 @@ public class CourierController {
 
     @GetMapping(path = "/courier/getCompleted")
     public List<CourierOrderDto> getCompleted() {
-        return simpleCourierService.getMyCurrentJobs();
+        return simpleCourierService.getCompletedJobs();
     }
 }
